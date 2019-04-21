@@ -3,24 +3,17 @@ const http = require('http'),
       url = require('url');
 
 const app = http.createServer((req, res) => {
-    const _url = req.url;
+    let _url = req.url;
     const queryData = url.parse(_url, true).query,
           pathname = url.parse(_url, true).pathname;
 
-    let title = queryData.id,
-        fileList = '';
+    let title = queryData.id;
 
     if (pathname === '/') {
       if (title === undefined)
         title = 'Welcome';
 
-      fs.readdir('./o_data', (err, list) => {
-        for (let i = 0; i < list.length; i++) {
-          fileList += `<li><a href='/?id=${list[i]}'>${list[i]}</a></li>`;
-        }
-      });
-
-      fs.readFile(`o_data/${title}`, 'utf-8', (err, data) => {
+      fs.readFile(`1_${title}.html`, 'utf-8', (err, data) => {
         if (data === undefined)
           data = 'Hello, Node.js!';
 
@@ -33,7 +26,11 @@ const app = http.createServer((req, res) => {
           </head>
           <body>
             <h1><a href="/">WEB</a></h1>
-            <ol>${fileList}</ol>
+            <ol>
+              <li><a href="?id=HTML">HTML</a></li>
+              <li><a href="?id=CSS">CSS</a></li>
+              <li><a href="?id=JavaScript">JavaScript</a></li>
+            </ol>
             <h2>${title}</h2>
             <p>${data}</p>
           </body>
