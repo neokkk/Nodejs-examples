@@ -4,16 +4,11 @@ const express = require('express'),
       dateFormat = require('dateformat');
 
 router.get('/', (req, res, next) => {
-    res.redirect('boardList');
+    res.redirect('board2/boardList');
 });
 
 const config = {
-    apiKey: "AIzaSyCFrpORd_UFV9yH3y4nr46nVeJIeInv37k",
-    authDomain: "fir-example-38d12.firebaseapp.com",
-    databaseURL: "https://fir-example-38d12.firebaseio.com",
-    projectId: "fir-example-38d12",
-    storageBucket: "fir-example-38d12.appspot.com",
-    messagingSenderId: "50947644257"
+    
 }
 // firebase.initializeApp(config);
 
@@ -33,7 +28,7 @@ router.get('/boardList', (req, res, next) => {
             });
             res.render('board2/boardList', {rows: rows});
         })
-        .catch((err) => { // Error handling
+        .catch((err) => {
             console.log('Error getting documents', err);
         });
 });
@@ -41,10 +36,10 @@ router.get('/boardList', (req, res, next) => {
 // 게시물 읽기
 router.get('/boardRead', (req, res, next) => {
     db.collection('board').doc(req.query.brdno).get()
-        .then((doc) => {
+        .then(doc => {
             const childData = doc.data();
 
-            childData.brddate = dateFormat(childdata.brddate, 'yyyy-mm-dd');
+            childData.brddate = dateFormat(childData.brddate, 'yyyy-mm-dd');
             res.render('board2/boardRead', {row: childData});
         })
 });
@@ -59,7 +54,7 @@ router.get('/boardForm', (req, res, next) => {
 
     // update
     db.collection('board').doc(req.query.brdno).get()
-        .then((doc) => {
+        .then(doc => {
             const childData = doc.data();
             res.render('board2/boardForm', {row: childData});
         })

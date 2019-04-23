@@ -6,7 +6,8 @@ const createError = require('http-errors'),
 
 const indexRouter = require('./routes/index'),
       usersRouter = require('./routes/users'),
-      board1Router = require('./routes/board1');
+      board1Router = require('./routes/board1'),
+      board2Router = require('./routes/board2');
 
 const app = express();
 
@@ -23,14 +24,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/board1', board1Router);
+app.use('/board2', board2Router);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
