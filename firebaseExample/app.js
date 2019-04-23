@@ -7,7 +7,8 @@ const createError = require('http-errors'),
 const indexRouter = require('./routes/index'),
       usersRouter = require('./routes/users'),
       board1Router = require('./routes/board1'),
-      board2Router = require('./routes/board2');
+      board2Router = require('./routes/board2'),
+      board3Router = require('./routes/board3');
 
 const app = express();
 
@@ -23,8 +24,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/board1', board1Router);
-app.use('/board2', board2Router);
+// app.use('/board1', board1Router);
+// app.use('/board2', board2Router);
+app.use('/board3', board3Router);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

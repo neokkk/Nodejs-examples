@@ -8,12 +8,7 @@ router.get('/', (req, res, next) => {
 });
  
 const config = {
-    apiKey: "AIzaSyCFrpORd_UFV9yH3y4nr46nVeJIeInv37k",    
-    authDomain: "fir-example-38d12.firebaseapp.com",    
-    databaseURL: "https://fir-example-38d12.firebaseio.com",    
-    projectId: "fir-example-38d12",    
-    storageBucket: "fir-example-38d12.appspot.com",    
-    messagingSenderId: "50947644257"  
+    
 };
 firebase.initializeApp(config);
        
