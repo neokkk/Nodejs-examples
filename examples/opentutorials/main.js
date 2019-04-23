@@ -1,7 +1,29 @@
 const http = require('http'),
       fs = require('fs'),
       url = require('url'),
-      qs = require('querystring');
+      qs = require('querystring'),
+      mysql = require('mysql');
+
+const db = mysql.createConnection({
+  
+});
+
+let dbId = [],
+    dbTitle = [],
+    dbDesc = [];
+
+db.connect();
+db.query('SELECT * FROM t_o_data', (err, data) => {
+  if (err) throw err;
+
+  for (let i = 0; i < data.length; i++) {
+    dbId.push(data[i].id);
+    dbTitle.push(data[i].title);
+    dbDesc.push(data[i].description);
+  }
+});
+
+console.log(dbId, dbTitle, dbDesc);
 
 const app = http.createServer((req, res) => {
     const _url = req.url;
@@ -27,20 +49,16 @@ const app = http.createServer((req, res) => {
 
       // 리스트 보여주기
       list : function() {
-        fs.readdir('./o_data', (err, list) => {
-  
-          for (let i = 0; i < list.length; i++) {
-            fileList += `<li><a href='/?id=${list[i]}'>${list[i]}</a></li>`;
+          for (let i = 0; i < dbTitle.length; i++) {
+            fileList += `<li><a href='/?id=${dbTitle[i]}'>${dbTitle[i]}</a></li>`;
           }
-        });
       },
   
       // 파일 읽은 후 HTML 렌더링
       html : function(data) {
-        fs.readFile(`o_data/${title}`, 'utf-8', (err, readData) => {
-          desc = readData;
-  
-          if (data)
+          if (typeof data === String)
+            readData = data;
+          else 
             readData = data;
   
           const templateHTML = `
@@ -62,9 +80,8 @@ const app = http.createServer((req, res) => {
           
           res.writeHead(200);
           res.end(templateHTML);
-        });
+        }
       }
-    }
   
     if (pathname === '/') { // home
       if (title === undefined) {
