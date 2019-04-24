@@ -3,10 +3,12 @@ const express = require('express'),
       firebase = require('firebase'),
       dateFormat = require('dateformat');
 
+// home
 router.get('/', (req, res, next) => {
     res.redirect('board2/boardList');
 });
 
+// DB info
 const config = {
     
 }
@@ -14,13 +16,13 @@ const config = {
 
 const db = firebase.firestore(); // firebase cloud firestore
 
-// 게시물 리스트 목록
+// 게시물 목록
 router.get('/boardList', (req, res, next) => {
     db.collection('board').orderBy('brddate', 'desc').get()
-        .then((snapshot) => {
+        .then(snapshot => {
             const rows = [];
 
-            snapshot.forEach((doc) => {
+            snapshot.forEach(doc => {
                 const childData = doc.data();
 
                 childData.brddate = dateFormat(childData.brddate, 'yyyy-mm-dd');
@@ -28,9 +30,7 @@ router.get('/boardList', (req, res, next) => {
             });
             res.render('board2/boardList', {rows: rows});
         })
-        .catch((err) => {
-            console.log('Error getting documents', err);
-        });
+        .catch(err => console.log('Error getting documents', err));
 });
 
 // 게시물 읽기

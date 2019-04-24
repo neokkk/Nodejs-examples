@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Board Read</title>
+</head>
+<body>
+        <table border="1" style="width:600px">
+            <caption>Board sample for firebase (Realtime Database)</caption>
+            <colgroup>
+                <col width='15%' />
+                <col width='*%' />
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td>Writer</td>
+                    <td><%=row.brdwriter%></td>
+                </tr>
+                <tr>
+                    <td>Title</td>
+                    <td><%=row.brdtitle%></td>
+                </tr>
+                <tr>
+                    <td>Memo</td>
+                    <td><%=row.brdmemo%></td>
+                </tr>
+            </tbody>
+        </table>   
+        <a href="#" onclick="history.back()">List</a>
+        <a href="boardDelete?brdno=<%=row.brdno%>">Delete</a>
+        <a href="boardForm?brdno=<%=row.brdno%>">Modify</a>
+</body>
+</html>
