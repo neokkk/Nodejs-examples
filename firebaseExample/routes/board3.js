@@ -10,11 +10,13 @@ router.get('/', (req, res, next) => {
 
 // DB info
 const config = {
-    
+      
 }
 // firebase.initializeApp(config);
 
 const db = firebase.firestore(); // firebase cloud firestore
+
+console.log(Date.now());
 
 // 게시물 목록
 router.get('/boardList', (req, res, next) => {
@@ -25,7 +27,7 @@ router.get('/boardList', (req, res, next) => {
             snapshot.forEach(doc => {
                 const childData = doc.data();
 
-                childData.brddate = dateFormat(childData.brddate, 'yyyy-mm-dd');
+                childData.brddate = dateFormat(Number(childData.brddate), 'yyyy-mm-dd');
                 rows.push(childData);
             });
             res.render('board3/boardList', {rows: rows});
@@ -39,6 +41,7 @@ router.get('/boardRead', (req, res, next) => {
         .then(doc => {
             const childData = doc.data();
 
+            console.log(childData);
             childData.brddate = dateFormat(childData.brddate, 'yyyy-mm-dd hh:mm');
             res.render('board3/boardRead', {row: childData});
         })
@@ -61,7 +64,7 @@ router.get('/boardForm', (req, res, next) => {
 });
 
 // 게시물 저장
-router.get('/boardSave', (req, res, next) => {
+router.post('/boardSave', (req, res, next) => {
     const postData = req.body;
 
     if (!postData.brdno) { // new
@@ -70,6 +73,7 @@ router.get('/boardSave', (req, res, next) => {
         postData.brddate = Date.now();
         postData.brdno = doc.id;
         doc.set(postData);
+
     } else { // update
         const doc = db.collection('board').doc(postData);
         doc.update(postData);
