@@ -6,6 +6,7 @@ const express = require('express'),
       template = require('./template2.js'),
       app = express();
 
+// home
 app.get('/', (req, res) => {
     fs.readdir('./o_data', (err, filelist) => {
         const title = 'Welcome',
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
     });
 });
 
+// read 
 app.get('/page/:pageId', (req, res) => {
     fs.readdir('./o_data', (err, filelist) => {
         const filteredId = path.parse(req.params.pageId).base;
@@ -32,8 +34,8 @@ app.get('/page/:pageId', (req, res) => {
                   html = template.html(sanitizedTitle, list,
                     `<h2>${sanitizedTitle}</h2>${sanitizedDescription}`,
                     ` <a href="/create">create</a>
-                    <a href="/update?id=${sanitizedTitle}">update</a>
-                    <form action="delete_process" method="post">
+                    <a href="/update/${sanitizedTitle}">update</a>
+                    <form action="/delete_process" method="post">
                         <input type="hidden" name="id" value="${sanitizedTitle}">
                         <input type="submit" value="delete">
                     </form>`
@@ -43,6 +45,7 @@ app.get('/page/:pageId', (req, res) => {
     });
 });
 
+// create
 app.get('/create', (req, res) => {
     fs.readdir('./o_data', (err, filelist) => {
         const title = 'WEB - create',
@@ -76,9 +79,77 @@ app.post('/create_process', (req, res) => {
 
         fs.writeFile(`o_data/${reqTitle}`, reqDesc, err => {
             if (err) throw err;
-            
+
             res.writeHead(302, { Locatioin: `/page/${reqTitle}` });
             res.end();
+        });
+    });
+});
+
+// update
+app.get('/update/:pageId', (req, res) => {
+    fs.readdir('./o_data', (err, filelist) => {
+        const filteredId = path.parse(req.params.pageId).base;
+
+        fs.readFile(`o_data/${filteredId}`, 'utf8', (err2, description) => {
+            const title = req.params.pageId,
+                  list = template.list(filelist),
+                  html = template.html(title, list,
+                    `
+                    <form action="/update_process" method="post">
+                        <input type="hidden" name="old_title" value="${title}">
+                        <p><input type="text" name="title" placeholder="title" value="${title}"></p>
+                        <p>
+                            <textarea name="description" placeholder="description">${description}</textarea>
+                        </p>
+                        <p>
+                            <input type="submit">
+                        </p>
+                    </form>
+                    `,
+                    `<a href="/create">create</a> <a href="/update/${title}">update</a>`
+                );
+            res.send(html);
+        });
+    });
+});
+
+app.post('/update_process', (req, res) => {
+    let body = '';
+
+    req.on('data', data => {
+        body += data;
+    });
+
+    req.on('end', () => {
+        const post = qs.parse(body),
+              reqOldTitle = post.old_title,
+              reqTitle = post.title,
+              reqDesc = post.description;
+
+        fs.rename(`/o_data/${reqOldTitle}`, `o_data/${reqTitle}`, err => {
+            fs.writeFile(`o_data/${reqTitle}`, reqDesc, 'utf-8', (err2) => {
+                res.writeHead(302, { Location: `/page/${reqTitle}` });
+                res.end();
+            });
+        });
+    });
+});
+
+app.post('/delete_process', (req, res) => {
+    let body = '';
+
+    req.on('data', data => {
+        body += data;
+    });
+
+    req.on('end', () => {
+        const post = qs.parse(body),
+              reqId = post.id,
+              filteredId = path.parse(reqId).base;
+
+        fs.unlink(`o_data/${filteredId}`, err => {
+            res.redirect('/');
         });
     });
 });
