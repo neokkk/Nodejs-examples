@@ -2,184 +2,179 @@ const http = require('http'),
       fs = require('fs'),
       url = require('url'),
       qs = require('querystring'),
-      mysql = require('mysql');
+      path = require('path'),
+      sanitizeHtml = require('sanitize-html'),
+      mysql = require('mysql'),
+      template = require('./template.js');
 
 const db = mysql.createConnection({
-  
+  host:'localhost',
+  user:'root',
+  password:'root',
+  database:'test'
 });
-
-let dbId = [],
-    dbTitle = [],
-    dbDesc = [];
-
 db.connect();
-db.query('SELECT * FROM t_o_data', (err, data) => {
-  if (err) throw err;
-
-  for (let i = 0; i < data.length; i++) {
-    dbId.push(data[i].id);
-    dbTitle.push(data[i].title);
-    dbDesc.push(data[i].description);
-  }
-});
-
-console.log(dbId, dbTitle, dbDesc);
-
+ 
+ 
 const app = http.createServer((req, res) => {
-    const _url = req.url;
-    const queryData = url.parse(_url, true).query,
+    const _url = req.url,
+          queryData = url.parse(_url, true).query,
           pathname = url.parse(_url, true).pathname;
 
-    const templateForm = (f_title, f_desc, f_act) => {
-      return `
-        <form action="http://localhost:3000/${f_act}_process" method="post">
-          <p><input type="text" name="title" placeholder="title" value="${f_title}"></p>
-          <p><textarea name="description" placeholder="description">${f_desc}</textarea></p>
-          <p><input type="submit"></p>
-        </form> 
-      `;
-    } 
-
-    let title = queryData.id,
-        desc = '',
-        fileList = '',
-        btn = '';
-
-    const template = {
-
-      // 리스트 보여주기
-      list : function() {
-          for (let i = 0; i < dbTitle.length; i++) {
-            fileList += `<li><a href='/?id=${dbTitle[i]}'>${dbTitle[i]}</a></li>`;
-          }
-      },
-  
-      // 파일 읽은 후 HTML 렌더링
-      html : function(data) {
-          if (typeof data === String)
-            readData = data;
-          else 
-            readData = data;
-  
-          const templateHTML = `
-            <!doctype html>
-            <html>
-            <head>
-            <title>WEB1 - ${title}</title>
-            <meta charset="utf-8">
-            </head>
-            <body>
-              <h1><a href="/">WEB</a></h1>
-              <ul>${fileList}</ul>
-              ${btn}            
-              <h2>${title}</h2>
-              <div>${readData}</div>
-            </body>
-            </html>
-            `;
-          
-          res.writeHead(200);
-          res.end(templateHTML);
-        }
-      }
-  
     if (pathname === '/') { // home
-      if (title === undefined) {
-        title = 'Welcome';
-        btn = '<a href="/create">create</a>';
+        if (queryData.id === undefined) {
+            db.query(`SELECT * FROM t_o_data`, (err, topics) => {
+            const title = 'Welcome',
+                    description = 'Hello, Node.js',
+                    list = template.list(topics);
+                    html = template.html(title, list,`<h2>${title}</h2>${description}`, `<a href="/create">create</a>`);
 
-        template.list();
-        template.html('Hello, Node.js!');
+            res.writeHead(200);
+            res.end(html);
+            });
+        } else {
+            db.query(`SELECT * FROM t_o_data`, (err, topics) => {
+                if (err) throw err;
 
-      } else { // /?id=''
-        btn = `<a href="/create">create</a>
-               <a href="/update?id=${title}">update</a>
-               <form action="delete_process" method="post">
-                <input type="hidden" name="id" value="${title}">
-                <input type="submit" value="delete">
-               </form>`;
+                db.query(`SELECT * FROM t_o_data LEFT JOIN t_o_author ON t_o_data.author_id=t_o_author.id WHERE t_o_data.id=?`,[queryData.id], (err2, topics2) => {
+                    if (err2) throw err2;
 
-        template.list();
-        template.html();
-      }
-
-    } else if (pathname === '/create') { 
-      title = 'create';
-
-      template.list();
-      template.html(templateForm('', '', 'create'));
-
+                    const title = topics2[0].title,
+                        description = topics2[0].description,
+                        list = template.list(topics),
+                        html = template.html(title, list,
+                            `
+                            <h2>${title}</h2>
+                            ${description}
+                            <p>by ${topics2[0].name}</p>
+                            `,` 
+                            <a href="/create">create</a>
+                            <a href="/update?id=${queryData.id}">update</a>
+                            <form action="delete_process" method="post">
+                            <input type="hidden" name="id" value="${queryData.id}">
+                            <input type="submit" value="delete">
+                            </form>
+                            `
+                        );
+                    res.writeHead(200);
+                    res.end(html);
+                });
+            });
+        }
+    } else if (pathname === '/create') {
+        db.query(`SELECT * FROM t_o_data`, (err, topics) => {
+            db.query('SELECT * FROM t_o_author', (err2, authors) => {
+                const title = 'Create',
+                    list = template.list(topics),
+                    html = template.html(title, list,
+                        `
+                        <form action="/create_process" method="post">
+                        <p><input type="text" name="title" placeholder="title"></p>
+                        <p>
+                            <textarea name="description" placeholder="description"></textarea>
+                        </p>
+                        <p>
+                            ${template.authorSelect(authors)}
+                        </p>
+                        <p>
+                            <input type="submit">
+                        </p>
+                        </form>
+                        `,
+                        `<a href="/create">create</a>`
+                    );
+                res.writeHead(200);
+                res.end(html);
+            });
+        });
     } else if (pathname === '/create_process') {
-      let body = '';
+        let body = '';
 
-      req.on('data', data => {
-        body += data;
-      });
-
-      req.on('end', () => {
-        const post = qs.parse(body),
-              reqTitle = post.title,
-              reqDesc = post.description;
-
-        fs.writeFile(`o_data/${reqTitle}`, reqDesc, err => {
-          if (err) throw err;
-  
-          res.writeHead(302, {Location: `/?id=${reqTitle}`});
-          res.end();
+        req.on('data', data => {
+            body += data;
         });
-      });
 
+        req.on('end', () => {
+            const post = qs.parse(body);
+            
+            db.query(`
+                INSERT INTO t_o_data (title, description, created, author_id) 
+                VALUES(?, ?, NOW(), ?)`,
+                [post.title, post.description, post.author], 
+                (err, result) => {
+                    if (err) throw err;
+                    res.writeHead(302, { Location: `/?id=${result.insertId}` });
+                    res.end();
+                }
+            )
+        });
     } else if (pathname === '/update') {
-      template.list();
-      template.html(templateForm(title, desc, 'update'));
-
-    } else if (pathname === '/update_process') {
-      let body = '';
-
-      req.on('data', data => {
-        body += data;
-      });
-
-      req.on('end', () => {
-        const post = qs.parse(body),
-              id = post.id,
-              reqTitle = post.title,
-              reqDesc = post.description;
-
-        fs.rename(`o_data/${id}`, `o_data/${title}`, err => {
-          fs.writeFile(`o_data/${reqTitle}`, reqDesc, err => {
+        db.query('SELECT * FROM t_o_data', (err, topics) => {
             if (err) throw err;
-  
-            res.writeHead(302, {Location: `/?id=${reqTitle}`});
-            res.end();
-          });
+
+            db.query(`SELECT * FROM t_o_data WHERE id=?`, [queryData.id], (err2, topics2) => {
+            if (err2) throw err2;
+
+            db.query('SELECT * FROM t_o_author', (err2, authors) => {
+                const list = template.list(topics),
+                      html = template.html(topics2[0].title, list,
+                        `
+                        <form action="/update_process" method="post">
+                            <input type="hidden" name="id" value="${topics2[0].id}">
+                            <p><input type="text" name="title" placeholder="title" value="${topics2[0].title}"></p>
+                            <p>
+                            <textarea name="description" placeholder="description">${topics2[0].description}</textarea>
+                            </p>
+                            <p>
+                            ${template.authorSelect(authors, topics2[0].author_id)}
+                            </p>
+                            <p>
+                            <input type="submit">
+                            </p>
+                        </form>
+                        `,
+                        `<a href="/create">create</a> <a href="/update?id=${topics2[0].id}">update</a>`
+                        );
+                res.writeHead(200);
+                res.end(html);
+            });
+            });
+        });
+    } else if (pathname === '/update_process') {
+        let body = '';
+
+        req.on('data', data => {
+            body += data;
         });
 
-      });
-
-    } else if (pathname ==='/delete_process') {
-      let body = '';
-
-      req.on('data', data => {
-        body += data;
-      });
-
-      req.on('end', () => {
-        const post = qs.parse(body),
-              id = post.id;
-
-        fs.unlink(`o_data/${id}`, err => {
-          if (err) throw err;
-
-          res.writeHead(302, {Location: '/'});
-          res.end();
+        req.on('end', () => {
+            const post = qs.parse(body);
+            
+            db.query('UPDATE t_o_data SET title=?, description=?, author_id=? WHERE id=?', [post.title, post.description, post.author, post.id], (err, result) => {
+                res.writeHead(302, { Location: `/?id=${post.id}` });
+                res.end();
+            });
         });
-      });
+    } else if (pathname === '/delete_process') {
+        let body = '';
 
+        req.on('data', data => {
+            body += data;
+        });
+
+        req.on('end', () => {
+            const post = qs.parse(body);
+
+            db.query('DELETE FROM t_o_data WHERE id = ?', [post.id], (err, result) => {
+                if (err) throw err;
+
+                res.writeHead(302, { Location: `/` });
+                res.end();
+            });
+        });
     } else {
-      res.writeHead(404);
-      res.end('Not Found');
-    } 
-  });
-
+        res.writeHead(404);
+        res.end('Not found');
+    }
+});
 app.listen(3000);
