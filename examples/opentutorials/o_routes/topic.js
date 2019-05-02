@@ -3,9 +3,7 @@ const express = require('express'),
       path = require('path'),
       fs = require('fs'),
       sanitizeHtml = require('sanitize-html'),
-      template = require('../template2.js');
-
-
+      template = require('../template2');
 
 // create
 router.get('/create', (req, res) => {
@@ -30,7 +28,7 @@ router.post('/create_process', (req, res) => {
           reqDesc = post.description;
 
     fs.writeFile(`o_data/${reqTitle}`, reqDesc, err => {
-        res.writeHead(302, { Location: `/page/${reqTitle}` });
+        res.writeHead(302, { Location: `/topic/${reqTitle}` });
         res.end();
     });
 });
@@ -66,7 +64,7 @@ router.post('/update_process', (req, res) => {
 
     fs.rename(`/o_data/${reqOldTitle}`, `o_data/${reqTitle}`, err => {
         fs.writeFile(`o_data/${reqTitle}`, reqDesc, 'utf-8', (err2) => {
-            res.writeHead(302, { Location: `/page/${reqTitle}` });
+            res.writeHead(302, { Location: `/topic/${reqTitle}` });
             res.end();
         });
     });
@@ -80,6 +78,30 @@ router.post('/delete_process', (req, res) => {
 
     fs.unlink(`o_data/${filteredId}`, err => {
         res.redirect('/');
+    });
+});
+
+// read 
+router.get('/:pageId', (req, res, next) => {
+    const filteredId = path.parse(req.params.pageId).base;
+    
+    fs.readFile(`o_data/${filteredId}`, 'utf8', (err, description) => {
+        if (err) next(err); // 인자 4개인 미들웨어 (맨 아래) 실행
+
+        const title = req.params.pageId,
+                sanitizedTitle = sanitizeHtml(title),
+                sanitizedDescription = sanitizeHtml(description, {allowedTags:['h1']});
+                
+                const list = template.list(req.list),
+                html = template.html(sanitizedTitle, list,
+                `<h2>${sanitizedTitle}</h2>${sanitizedDescription}`,
+                ` <a href="/topic/create">create</a>
+                <a href="/topic/update/${sanitizedTitle}">update</a>
+                <form action="/topic/delete_process" method="post">
+                    <input type="hidden" name="id" value="${sanitizedTitle}">
+                    <input type="submit" value="delete">
+                    </form>`);
+        res.send(html);
     });
 });
 
