@@ -1,80 +1,85 @@
-html, body {
-    margin: 0;
-    padding: 0;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #memo_frm {
-    width: 600px;
-    height: 200px;
-    background-color: rgb(219, 238, 245);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 100px;
-    box-sizing: border-box;
+  width: 600px;
+  height: 200px;
+  background-color: rgb(219, 238, 245);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  box-sizing: border-box;
 }
 
 #memo_frm textarea {
-    width: 400px;
-    height: 100px;
-    padding: 10px;
-    box-sizing: border-box;
+  width: 400px;
+  height: 100px;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 #memo_frm button {
-    width: 100px;
-    height: 100px;
-    text-align: center;
-    line-height: 100px;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  line-height: 100px;
 }
 
 .memo_view {
-    width: 600px;
-    height: 200px;
-    background-color: rgb(219, 238, 245);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    margin-top: 20px;
+  width: 600px;
+  height: 200px;
+  background-color: rgb(219, 238, 245);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin-top: 20px;
 }
-.memo_view_wrwp {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.memo_view_wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .memo_text {
-    width: 390px;
-    height: 100px;
-    padding: 10px;
-    margin-right: 10px;
-    box-sizing: border-box;
-    background-color: white;
+  font-size: 0.9rem;
+  width: 390px;
+  height: 100px;
+  padding: 10px;
+  margin-right: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 .memo_date {
-    width: 390px;
-    height: 10px;
-    padding-top: 10px;
-    margin-right: 10px;
-    background-color: white;
+  font-size: 0.8rem;
+  width: 380px;
+  height: 30px;
+  line-height: 30px;
+  padding-left: 10px;
+  margin-top: 5px;
+  margin-right: 10px;
+  box-sizing: border;
 }
 .memo_btn {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .memo_btn button {
-    width: 100px;
-    height: 35px;
-    margin-top: 10px;
+  width: 100px;
+  height: 35px;
+  margin-top: 10px;
 }
-.memo_btn button:first-child {
-    margin-top: -10px;
+.memo_btn a:first-child button {
+  margin-top: -10px;
 }
