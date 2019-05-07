@@ -1,11 +1,11 @@
 ## nlog - memo
 
+<br>
+<br>
 - 메인 화면 (template.ejs)
-  <br>
-  <br>
 
-  > 수정 데이터가 없으면 form.ejs, 있으면 form_update.ejs
-  > 게시물 목록이 있으면 (result.length !== 0) -> list 출력
+> 수정 데이터가 없으면 form.ejs, 있으면 form_update.ejs
+> 게시물 목록이 있으면 (result.length !== 0) -> list 출력
 
 - 메모 생성 (/create)
 
