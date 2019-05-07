@@ -1,22 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="/stylesheets/memo.css" />
-    <title>Memo</title>
-  </head>
-  <body>
-    <form id="memo_frm" action="/memo/create" method="POST">
-      <textarea
-        name="memo_input"
-        id="memo_input"
-        style="resize:none"
-      ></textarea>
-      <input type="hidden" name="memo_id" value="<%= memo_id %>" />
-      <button type="submit">enter</button>
-    </form>
-    <% if (result.length !== 0) { %> <% include ./list.ejs %> <% } %>
-  </body>
-</html>
+<form class="memo_frm" action="/memo/create" method="POST">
+  <textarea name="memo_input" class="memo_input" style="resize:none"></textarea>
+  <input type="hidden" name="memo_id" value=<%= memo_id %> />
+  <button type="submit">enter</button>
+</form>

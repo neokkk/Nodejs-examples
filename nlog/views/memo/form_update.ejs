@@ -1,0 +1,7 @@
+<form class="memo_frm" action="/memo/update" method="POST">
+  <textarea name="memo_update_input" class="memo_input" style="resize:none">
+  <%= modify[0].memo_text %></textarea
+  >
+  <input type="hidden" name="memo_update_id" value=<%= modify[0].memo_id %> />
+  <button type="submit">update</button>
+</form>
