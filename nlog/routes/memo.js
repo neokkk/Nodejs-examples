@@ -67,7 +67,6 @@ router.post("/update", (req, res, next) => {
   const postData = req.body;
 
   postData.memo_update_id = Number(postData.memo_update_id);
-  console.log(postData);
 
   db.query(
     `UPDATE t_n_memo SET memo_text='${
