@@ -13,19 +13,15 @@ const db = mysql.createConnection({
 });
 db.connect();
 
-let memo_id = 0;
-
 /* GET memo listing. */
 router.get("/", (req, res, next) => {
   db.query("SELECT * FROM t_n_memo ORDER BY memo_id DESC", (err, result) => {
     if (err) throw err;
 
-    memo_id = result.length + 1;
-
     for (let i = 0; i < result.length; i++) {
       result[i].memo_date = dateFormat(result[i].memo_date, "yy-mm-dd HH:MM");
     }
-    res.render("memo/template", { result, memo_id, modify: null });
+    res.render("memo/template", { result, modify: null });
   });
 });
 
@@ -35,8 +31,8 @@ router.post("/create", (req, res, next) => {
 
   if (postData.memo_input !== "") {
     db.query(
-      "INSERT INTO t_n_memo (memo_id, memo_text, memo_user, memo_date) VALUES (?, ?, ?, Now())",
-      [`${postData.memo_id}`, `${postData.memo_input}`, ""],
+      "INSERT INTO t_n_memo (memo_text, memo_user, memo_date) VALUES (?, ?, Now())",
+      [`${postData.memo_input}`, ""],
       (err, result) => {
         if (err) throw err;
       }
