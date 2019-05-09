@@ -12,6 +12,8 @@ body {
   padding-top: 100px;
   padding-bottom: 100px;
   box-sizing: border-box;
+  font-family: "Nanum Square";
+  font-weight: light;
 }
 
 .memo_frm {
