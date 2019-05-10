@@ -6,7 +6,7 @@ module.exports = () => {
       mongoose.set('debug', true);
     }
     mongoose.connect(
-      "mongodb://nk/pswcompassnk@localhost:27017/admin",
+      "mongodb://nk:pswcompassnk@localhost:27017/admin",
       {
         dbName: "test_nodejs",
         useNewUrlParser: true
