@@ -1,14 +1,18 @@
-const mongoose = reqiuire("mongoose");
+const mongoose = require("mongoose");
 
 module.exports = () => {
   const connect = () => {
+    if (process.env.NODE_ENV !== 'production') {
+      mongoose.set('debug', true);
+    }
     mongoose.connect(
-      "mongodb://nk/psw_com_nk@localhost:27017/admin",
+      "mongodb://nk/pswcompassnk@localhost:27017/admin",
       {
-        dbName: "test_nodejs"
+        dbName: "test_nodejs",
+        useNewUrlParser: true
       },
       err => {
-        if (err) console.log("mongodb connect error", error);
+        if (err) console.log("mongodb connect error", err);
         else console.log("mongodb connect success");
       }
     );
@@ -21,7 +25,7 @@ module.exports = () => {
 
   mongoose.connection.on("disconnected", err => {
     console.error("mongodb disconnected, retry connection");
-    connect();
+    connect(); // 재연결
   });
 
   require("./user");
