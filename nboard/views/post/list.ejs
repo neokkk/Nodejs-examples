@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>posts</title>
+</head>
+<body>
+    <header>nBoard</header>
+    <nav>
+        <a href="/posts/new"><button>New</button></a>
+        <button>Join</button>
+        <button>Login</button>
+    </nav>
+    <table>
+        <th>
+            <td width="50px">No.</td>
+            <td width="500px">Title</td>
+            <td width="120px">Date</td>
+            <td width="130px">Author</td>
+        </th>
+        <% for (let i = 0; i < data.length; i++) { %>
+            <tr>
+                <td><%= i %></td>
+                <td><a href="posts/detail/<%=data[i]._id%>"><%= data[i].title %></a></td>
+                <td><%= data[i].createdAt %></td>
+                <td><%= data[i].author %></td>
+            </tr>
+        <% } %>
+    </table>
+    <script src="/javascripts/index.js"></script>
+</body>
+</html>

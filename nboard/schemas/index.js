@@ -33,4 +33,7 @@ module.exports = () => {
         console.error('DB disconnected', err);
         connect();
     });
+
+    require('./post');
+    require('./user');
 }

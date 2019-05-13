@@ -6,3 +6,14 @@ body {
 a {
   color: #00B7FF;
 }
+
+table {
+  width: 800px;
+  background-color: gray;
+  margin: 0 auto;
+}
+
+table td {
+  border: 1px solid gray;
+  border-collapse: collapse;
+}
