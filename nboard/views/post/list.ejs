@@ -4,32 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/post_list.css">
     <title>posts</title>
 </head>
 <body>
     <header>nBoard</header>
     <nav>
         <a href="/posts/new"><button>New</button></a>
-        <button>Join</button>
-        <button>Login</button>
+        <div>
+            <a href="/users/join"><button>Join</button></a>
+            <a href="/users/login"><button>Login</button></a>
+        </div>
     </nav>
     <table>
-        <th>
-            <td width="50px">No.</td>
-            <td width="500px">Title</td>
-            <td width="120px">Date</td>
-            <td width="130px">Author</td>
-        </th>
-        <% for (let i = 0; i < data.length; i++) { %>
+        <thead>
             <tr>
-                <td><%= i %></td>
-                <td><a href="posts/detail/<%=data[i]._id%>"><%= data[i].title %></a></td>
-                <td><%= data[i].createdAt %></td>
-                <td><%= data[i].author %></td>
+                <th width="50px">No.</th>
+                <th width="500px">Title</th>
+                <th width="150px">Date</th>
+                <th width="100px">Author</th>
             </tr>
-        <% } %>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>타이틀 입니다</td>
+                <td>2019-05-14</td>
+                <td>nk</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>css 만지는 중</td>
+                <td>2019-05-15</td>
+                <td>nk</td>
+            </tr>
+            <% for (let i = 0; i < data.length; i++) { %>
+                <tr>
+                    <td><%= i %></td>
+                    <td><a href="posts/detail/<%=data[i]._id%>"><%= data[i].title %></a></td>
+                    <td><%= data[i].createdAt %></td>
+                    <td><%= data[i].author %></td>
+                </tr>
+            <% } %>
+        </tbody>
     </table>
-    <script src="/javascripts/index.js"></script>
 </body>
 </html>

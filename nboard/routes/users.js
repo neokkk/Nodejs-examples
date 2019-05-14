@@ -1,9 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-/* GET users listing. */
-router.get('/', (req, res, next) => {
-  res.send('respond with a resource');
+// login
+router.get('/login', (req, res, next) => {
+  res.render('user/login');
+});
+
+// join
+router.get('/join', (req, res, next) => {
+  res.render('user/join');
 });
 
 module.exports = router;

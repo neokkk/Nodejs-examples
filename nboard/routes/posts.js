@@ -7,6 +7,7 @@ const Post = require('../schemas/post');
 router.get('/', (req, res, next) => {
     Post.find({})
         .then(data => {
+            console.log(data);
             res.render('post/list', { data });
         })
         .catch(err => {
@@ -32,7 +33,7 @@ router.get('/:id', (req, res, next) => {
 })
 
 // create
-router.post('/', (req, res, next) => {
+router.post('/create', (req, res, next) => {
     const formData = req.body;
 
     const post = new Post({
@@ -41,7 +42,7 @@ router.post('/', (req, res, next) => {
     });
 
     post.save()
-        .then((data) => {
+        .then(data => {
             console.log(data);
             res.redirect('/');
         })

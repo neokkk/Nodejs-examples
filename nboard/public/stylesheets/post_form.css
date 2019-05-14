@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+header {
+    font-weight: bold;
+    font-size: 30px;
+    width: 800px;
+    margin: 0 auto;
+}
+
+nav {
+    width: 800px;
+    margin: 40px auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+form {
+    width: 800px;
+    padding: 50px;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    box-sizing: border-box;
+}
+
+form .wrap_title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+form .wrap_title textarea {
+    width: 600px;
+    height: 25px;
+    border-radius: 5px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+form .wrap_text {
+    display: flex;
+    justify-content: space-between;
+}
+
+form .wrap_text textarea {
+    width: 600px;
+    height: 350px;
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+}
