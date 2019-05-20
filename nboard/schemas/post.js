@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const { Types: ObjectId } = Schema;
+const { Types: { ObjectId } } = Schema;
 
 const postSchema = new Schema({
     title: {
@@ -15,9 +15,12 @@ const postSchema = new Schema({
     },
     createdAt: {
         type: Date,
-        default: new Date()
+        default: Date.now
     },
-    author: { type: String }
+    author: { 
+        type: String,
+        default: 'visitor' 
+    }
 });
 
 module.exports = mongoose.model("Post", postSchema);

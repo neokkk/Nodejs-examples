@@ -37,9 +37,10 @@ form .wrap_title {
 
 form .wrap_title textarea {
     width: 600px;
-    height: 25px;
-    border-radius: 5px;
+    height: 30px;
     padding: 0 10px;
+    line-height: 30px;
+    overflow: hidden;
     box-sizing: border-box;
 }
 
@@ -51,7 +52,6 @@ form .wrap_text {
 form .wrap_text textarea {
     width: 600px;
     height: 350px;
-    border-radius: 5px;
     padding: 10px;
     box-sizing: border-box;
 }

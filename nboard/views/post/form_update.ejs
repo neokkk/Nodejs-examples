@@ -11,16 +11,16 @@
     <a href="/posts"><header>nBoard</header></a>
     <nav>
         <button onclick="history.back()">Back</button>
-        <input type="submit" value="submit" form="form">
+        <input type="submit" value="update" form="form">
     </nav>
-    <form id="form" action="/posts/create" method="POST">
+    <form id="form" action="/posts/update" method="POST">
         <div class="wrap_title">
             <label for="form_title">Title</label>
-            <textarea name="form_title" style="resize:none"></textarea>
+            <textarea name="form_title" style="resize:none"><%= data.title %></textarea>
         </div>
         <div class="wrap_text">
             <label for="form_text">Content</label>
-            <textarea name="form_text" style="resize:none"></textarea>
+            <textarea name="form_text" style="resize:none"><%= data.content %></textarea>
         </div>
     </form>
 </body>

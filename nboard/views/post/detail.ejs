@@ -4,20 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/post_detail.css">
     <title>Detail</title>
 </head>
 <body>
-    <header>nBoard</header>
+    <a href="/posts"><header>nBoard</header></a>
     <nav>
-        <button>Back</button>
-        <button>Edit</button>
-        <button>Delete</button>
+        <button onclick="history.back()">Back</button>
+        <div>
+            <a href="/posts/update/<%= data.id %>"><button>Edit</button></a>
+            <a href="/posts/delete/<%= data.id %>"><button>Delete</button></a>
+        </div>
     </nav>
-    <div>
-        <div></div>
-        <div></div>
-        <span></span>
+    <div class="detail_wrap">
+        <div class="detail_title"><%= data.title %></div>
+        <div class="detail_content"><%= data.content %></div>
+        <span class="detail_date"><%= data.createdAt %></span>
     </div>
 </body>
 </html>

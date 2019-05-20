@@ -8,7 +8,7 @@
     <title>posts</title>
 </head>
 <body>
-    <a href="/posts/"><header>nBoard</header></
+    <a href="/posts"><header>nBoard</header></a>
     <nav>
         <a href="/posts/new"><button>New</button></a>
         <div>
@@ -26,22 +26,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>타이틀 입니다</td>
-                <td>2019-05-14</td>
-                <td>nk</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>css 만지는 중</td>
-                <td>2019-05-15</td>
-                <td>nk</td>
-            </tr>
             <% for (let i = 0; i < data.length; i++) { %>
                 <tr>
-                    <td><%= i %></td>
-                    <td><a href="posts/detail/<%=data[i]._id%>"><%= data[i].title %></a></td>
+                    <td><%= i + 1 %></td>
+                    <td><a href="posts/detail/<%= data[i].id %>"><%= data[i].title %></a></td>
                     <td><%= data[i].createdAt %></td>
                     <td><%= data[i].author %></td>
                 </tr>
