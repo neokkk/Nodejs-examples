@@ -37,7 +37,7 @@ router.post('/create', (req, res, next) => {
 
     const post = new Post({
         title: formData.form_title.trim(), 
-        content: formData.form_text.trim(),
+        content: formData.form_text
     });
 
     post.save()
@@ -63,9 +63,9 @@ router.get('/update/:id', (req, res, next) => {
 router.post('/update', (req, res, next) => {
     const formData = req.body;
 
-    Post.update({
+    Post.update({ _id: formData.id }, {
         title: formData.form_title.trim(),
-        content: formData.form_text.trim()
+        content: formData.form_text
     })
         .then(() => {
             res.redirect('/posts');

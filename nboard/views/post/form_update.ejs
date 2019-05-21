@@ -14,6 +14,7 @@
         <input type="submit" value="update" form="form">
     </nav>
     <form id="form" action="/posts/update" method="POST">
+        <input type="hidden" name="id" value="<%= data.id %>" />
         <div class="wrap_title">
             <label for="form_title">Title</label>
             <textarea name="form_title" style="resize:none"><%= data.title %></textarea>
