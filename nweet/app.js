@@ -3,18 +3,21 @@ const express = require('express'),
       morgan = require('morgan'),
       path = require('path'),
       session = require('express-session'),
-      flash = require('connect-flash');
+      flash = require('connect-flash'),
+      passport = require('passport');
 
 require('dotenv').config();
 
 const indexRouter = require('./routes/page'),
-userRouter = require('./routes/user');
+      userRouter = require('./routes/user'),
+      authRouter = require('./routes/auth');
 
 const { sequelize } = require('./models');
+const passportConfig = require('./passport');
 
 const app = express();
 sequelize.sync();
-
+passportConfig(passport);
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
@@ -35,8 +38,12 @@ app.use(session({
     }
 }));
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session()); // express-session보다 하위에 있어야 한다
 
 app.use('/', indexRouter);
+app.use('/user', userRouter);
+app.use('/auth', authRouter);
 
 app.use((req, res, next) => {
     const err = new Error('Not Found');
