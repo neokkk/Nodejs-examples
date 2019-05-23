@@ -1,6 +1,7 @@
 ## nlog - memo
 
 <br>
+![nlog](https://user-images.githubusercontent.com/35194760/58231089-0cbcff80-7d71-11e9-81ca-8f3678b56eec.png)
 <br>
 
 - 메인 화면 (template.ejs)
