@@ -10,7 +10,8 @@ require('dotenv').config();
 
 const indexRouter = require('./routes/page'),
       userRouter = require('./routes/user'),
-      authRouter = require('./routes/auth');
+      authRouter = require('./routes/auth'),
+      postRouter = require('./routes/post');
 
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
@@ -25,6 +26,7 @@ app.set('port', process.env.PORT || 8001);
 
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/img', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -44,6 +46,7 @@ app.use(passport.session()); // express-session보다 하위에 있어야 한다
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
+app.use('/post', postRouter);
 
 app.use((req, res, next) => {
     const err = new Error('Not Found');

@@ -12,3 +12,6 @@ block content
       if user.Followers
         for follower in user.Followers
           div= follower.nick
+    form#profile-form(method='post', action='/user/profile')
+      input(name='nick')
+      button 닉네임 수정

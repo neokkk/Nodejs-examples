@@ -21,11 +21,11 @@ db.Post.belongsToMany(db.Hashtag, { through: 'PostHashtag' });
 db.Hashtag.belongsToMany(db.Post, { through: 'PostHashtag' }); // 다대다 관계에서는 새로운 테이블이 필요 (through: '테이블명')
 
 // 팔로잉 - 팔로우
-db.User.belongsToMany(db.User, { through: 'Follow', as: 'Following', foreignKey: 'followersId' });
+db.User.belongsToMany(db.User, { through: 'Follow', as: 'Followings', foreignKey: 'followersId' });
 db.User.belongsToMany(db.User, { through: 'Follow', as: 'Followers', foreignKey: 'followingId' });
 
 // 좋아요
 db.User.belongsToMany(db.Post, { through: 'Like' });
-db.Post.belongsToMany(db.User, { through: 'Like' });
+db.Post.belongsToMany(db.User, { through: 'Like', as: 'Liker' });
 
 module.exports = db;

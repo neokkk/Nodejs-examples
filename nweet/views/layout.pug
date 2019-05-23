@@ -19,7 +19,7 @@ html
               div 팔로워
               .count.follower-count= user.Followers && user.Followers.length || 0
             input#my-id(type='hidden' value=user.id)
-            a#my-profile.btn(href='/profile') 내 프로필
+            a#my-profile.btn(href=`/user/profile`) 내 프로필
             a#logout.btn(href='/auth/logout') 로그아웃
           else
             form#login-form(action='/auth/login' method='post')
