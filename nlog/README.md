@@ -1,6 +1,9 @@
 ## nlog - memo
+<br>
+### Screenshots
 
 <br>
+<img src="https://user-images.githubusercontent.com/35194760/58231089-0cbcff80-7d71-11e9-81ca-8f3678b56eec.png" width="100%">
 <br>
 
 - 메인 화면 (template.ejs)
@@ -33,9 +36,8 @@
   > 메인 화면으로 redirect
 
 <br>
-<br>
 
-### 업데이트 할 것
+### 업데이트 할 것 (블로그와 연동하면서 기능 추가하자)
 
 - 회원가입 및 로그인 (깃헙 등 타 사이트 연동도 해보기)
 - 프로필 설정 및 수정
