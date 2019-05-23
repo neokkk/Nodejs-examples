@@ -1,8 +1,6 @@
 ## nlog - memo
-nlog의 memo 항목입니다.
 <br>
-Screenshots
------------
+### Screenshots
 <img src="https://user-images.githubusercontent.com/35194760/58231089-0cbcff80-7d71-11e9-81ca-8f3678b56eec.png" width="100%">
 <br>
 
