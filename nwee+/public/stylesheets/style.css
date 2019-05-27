@@ -1,0 +1,135 @@
+html { margin: 0; padding: 0 }
+body {
+  font-family: 'NanumBarunGothic', sans-serif;
+  font-weight: 200;
+  background-color: #eeeeee;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  position: fixed;
+  width: 100%;
+  height: 60px;
+  background-color:white;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav {
+  width: 350px;
+  margin-top: 70px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-login {
+  height: 380px;
+  margin-bottom: 10px;
+  background-color: white;
+}
+
+.nav-login h2 {
+  font-size: 18px;
+  font-weight: 300;
+  color: #454545;
+  padding: 20px 30px;
+  margin: 0;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.nav-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
+  margin-top: -40px;
+  box-sizing: border-box;
+}
+
+.nav-form h3 {
+  font-size: 13px;
+  font-weight: 300;
+  color: #ee5959;
+}
+
+.nav-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-form form input {
+  font-size: 12px;
+  color: #dbdbdb;
+  height: 35px;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+.nav-form form div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.nav-form form div button {
+  height: 35px;
+  font-size: 12px;
+  padding: 5px 9px;
+  color: white;
+  background-color: #ee5959;
+  border: none;
+  box-sizing: border-box;
+}
+
+.nav-form form div button:last-child {
+  border: 1px solid #ee5959;
+  color: #ee5959;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.nav-trend {
+  height: 190px;
+  background-color: white;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.nav-trend h3 {
+  font-size: 13px;
+  font-weight: 300;
+  color: #454545;
+  margin: 0;
+}
+
+.nav-trend ul {
+  font-size: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 25px 0;
+}
+
+.nav-trend ul li {
+  color: #ee5959;
+  margin: 5px 0;
+}
+
+.main {
+  width: 600px;
+  height: 500px;
+  background-color: white;
+  margin-top: 70px;
+}

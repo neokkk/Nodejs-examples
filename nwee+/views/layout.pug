@@ -1,0 +1,44 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, user-scale=no')
+    meta(http-equiv='X-UA-Compatile' content='IE=edge')
+    link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumBarunGothic@1.0/nanumbarungothicsubset.css")
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    title= 'ntwee+'
+  body
+    .container
+      .header
+        a(href='/')
+          img.header-logo(src='/images/ball.png' width='30px')
+
+      .nav
+        if user && user.id
+          .nav-profile
+            div
+              .nav-profile_image
+              .nav-profile-detail
+              a.nav-profile-edit
+            ul
+              li= '트윗'
+              li= '팔로잉'
+              li= '팔로워'
+            form
+              textarea(style='resize:none' required)
+          include trend
+        else
+          .nav-login
+            h2= '로그인'
+            .nav-form
+              h3= '계정이 있으신가요?'
+              form(action="/auth/login" method="POST")
+                input(type='text' placeholder='이메일')
+                input(type='password' placeholder='비밀번호')
+                div
+                  button(type='button')= '카카오톡 로그인'
+                  button(type='submit')= '이메일 로그인'
+                  button(type='button')= '회원가입'
+          include trend
+
+      block main
