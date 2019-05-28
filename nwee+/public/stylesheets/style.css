@@ -214,13 +214,44 @@ a { text-decoration: none }
   margin-top: 70px;
 }
 
-.main h2 {
+/* main header */
+.main-header {
+  padding: 20px 30px;
+  border-bottom: 1px solid #eeeeee;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-header h2 {
   font-size: 18px;
   font-weight: 300;
   color: #454545;
-  padding: 20px 30px;
   margin: 0;
-  border-bottom: 1px solid #eeeeee;
+}
+
+.main-header-form {
+  position: relative;
+}
+
+.main-header-form span {
+  color: rgb(180, 180, 180);
+  font-size: 12px;
+  position: absolute;
+  top: 4px;
+  right: 15px;
+  z-index: 1;
+}
+
+.main-header-form input {
+  width: 200px;
+  height: 30px;
+  font-size: 12px;
+  box-sizing: border-box;
+  padding-left: 10px;
+  position: absolute;
+  top: -5px;
+  right: 5px;
 }
 
 /* main post */

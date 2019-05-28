@@ -3,7 +3,12 @@ extends layout
 block main
     .main
         if user && user.id
-            h2= '타임라인'
+            .main-header
+                h2= '타임라인'
+                form.main-header-form
+                    span
+                        i.fa.fa-search
+                    input(type='search' placeholder='해시태그 검색')
             .main-post
                 .main-post-profile
                     .main-post-profile-image
