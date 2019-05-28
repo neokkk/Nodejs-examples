@@ -2,9 +2,14 @@ extends layout
 
 block main
     .main
-        h2= '타임라인'
-        .main-post
-            .main-post-profile
-                .profile-
-            .main-post-comment
-            .main-post-detail
+        if user && user.id
+            h2= '타임라인'
+            .main-post
+                .main-post-profile
+                    .main-post-profile-image
+                    .main-post-profile-name= '나동'
+                .main-post-wrap
+                    .main-post-comment= '가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 '
+                    .main-post-detail
+                        a(href='#')= '지우기'
+                        span= '몇분 전'

@@ -3,12 +3,13 @@ extends layout
 block main
     .main
         h2= '회원가입'
-        div
+        .main-join
             img(src='')
             h3= '프로필 사진을 설정하세요'
-            form
-                input(type='text' placeholder='닉네임' maxlength=10)
-                input(type='text' placeholder='이메일' maxlength=20)
-                input(type='password' placeholder='비밀번호')
-                input(type='text' placeholder='한 줄 자기소개' maxlength=30)
+            form.main-join-form(action='' method="POST")
+                input(type='text' placeholder='닉네임' maxlength=10 required)
+                input(type='text' placeholder='이메일' maxlength=20 required)
+                input(type='password' placeholder='비밀번호' required)
+                input(type='password' placeholder='비밀번호 확인' required)
+                input(type='text' placeholder='한 줄 자기소개' maxlength=20)
                 button(type='submit')= '회원가입'

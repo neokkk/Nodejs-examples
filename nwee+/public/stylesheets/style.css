@@ -2,16 +2,19 @@ html { margin: 0; padding: 0 }
 body {
   font-family: 'NanumBarunGothic', sans-serif;
   font-weight: 200;
+  color: #454545;
   background-color: #eeeeee;
   margin: 0;
   padding: 0;
 }
+a { text-decoration: none }
 
 .container {
   display: flex;
   justify-content: center;
 }
 
+/* header */
 .header {
   position: fixed;
   width: 100%;
@@ -32,6 +35,80 @@ body {
   flex-direction: column;
 }
 
+/* nav profile */
+.nav-profile {
+  font-size: 12px;
+  height: 380px;
+  margin-bottom: 10px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-profile > div {
+  height: 120px;
+  padding: 30px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #454545;
+}
+
+.nav-profile-detail {
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nav-profile-detail span:first-child {
+  font-weight: 600;
+}
+
+.nav-profile-edit {
+  font-size: 10px;
+  color: #dbdbdb;
+  width: 60px;
+  text-align: right;
+}
+
+.nav-profile > ul {
+  height: 50px;
+  padding: 19px 20px;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-profile ul li {
+  list-style: none;
+}
+
+.nav-profile form {
+  width: 100%;
+  height: 210px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.nav-profile form textarea {
+  font-size: 12px;
+  font-family: 'NanumBarunGothic', sans-serif;
+  font-weight: 200;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* nav login */
 .nav-login {
   height: 380px;
   margin-bottom: 10px;
@@ -47,7 +124,7 @@ body {
   border-bottom: 1px solid #eeeeee;
 }
 
-.nav-form {
+.nav-login-form {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -57,18 +134,18 @@ body {
   box-sizing: border-box;
 }
 
-.nav-form h3 {
+.nav-login-form h3 {
   font-size: 13px;
   font-weight: 300;
   color: #ee5959;
 }
 
-.nav-form form {
+.nav-login-form form {
   display: flex;
   flex-direction: column;
 }
 
-.nav-form form input {
+.nav-login-form form input {
   font-size: 12px;
   color: #dbdbdb;
   height: 35px;
@@ -77,14 +154,14 @@ body {
   box-sizing: border-box;
 }
 
-.nav-form form div {
+.nav-login-form form div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 0;
 }
 
-.nav-form form div button {
+.nav-login-form form div button {
   height: 35px;
   font-size: 12px;
   padding: 5px 9px;
@@ -92,15 +169,17 @@ body {
   background-color: #ee5959;
   border: none;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
-.nav-form form div button:last-child {
+.nav-login-form form div a:last-child button {
   border: 1px solid #ee5959;
   color: #ee5959;
   background-color: white;
   box-sizing: border-box;
 }
 
+/* nav trend */
 .nav-trend {
   height: 190px;
   background-color: white;
@@ -127,9 +206,120 @@ body {
   margin: 5px 0;
 }
 
+/* main */
 .main {
   width: 600px;
   height: 500px;
   background-color: white;
   margin-top: 70px;
+}
+
+.main h2 {
+  font-size: 18px;
+  font-weight: 300;
+  color: #454545;
+  padding: 20px 30px;
+  margin: 0;
+  border-bottom: 1px solid #eeeeee;
+}
+
+/* main post */
+.main-post {
+  font-size: 12px;
+  height: 120px;
+  display: flex;
+  padding: 30px;
+  border: 1px solid #eeeeee;
+}
+
+.main-post-profile {
+  width: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main-post-profile-image {
+  height: 60px;
+  background-color: #454545;
+  border-radius: 50%;
+}
+
+.main-post-profile-name {
+  color: #454545;
+  font-weight: 600;
+  text-align: center;
+}
+
+.main-post-wrap {
+  width: 450px;
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main-post-comment {
+  
+}
+
+.main-post-detail {
+  color: #ee5959;
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-post-detail a {
+  color: #ee5959;
+  text-decoration: none;
+}
+
+/* main join */
+.main-join {
+  height: 519px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.main-join img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background-color: #ee5959;
+  margin-top: 10px;
+}
+
+.main-join h3 {
+  font-size: 10px;
+  font-weight: 200;
+  color: #dbdbdb;
+  margin-top: 30px;
+}
+
+.main-join-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.main-join-form input {
+  font-size: 12px;
+  width: 290px;
+  height: 35px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.main-join-form button {
+  font-size: 12px;
+  height: 35px;
+  border: 1px solid #ee5959;
+  color: #ee5959;
+  background-color: white;
+  box-sizing: border-box;
 }

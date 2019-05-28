@@ -1,9 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-/* GET home page. */
+// get index page
 router.get('/', (req, res, next) => {
   res.render('main');
 });
+
+// get join page
+router.get('/join', (req, res, next) => {
+  res.render('join');
+})
 
 module.exports = router;
