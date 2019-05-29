@@ -1,16 +1,27 @@
 extends layout
 
-block main
+block content
     .main
         .main-header
             h2= '회원가입'
         .main-join
             img(src='')
             h3= '프로필 사진을 설정하세요'
-            form.main-join-form(action='' method="POST")
-                input(type='text' placeholder='닉네임' maxlength=10 required)
-                input(type='text' placeholder='이메일' maxlength=20 required)
-                input(type='password' placeholder='비밀번호' required)
-                input(type='password' placeholder='비밀번호 확인' required)
-                input(type='text' placeholder='한 줄 자기소개' maxlength=20)
+            form.main-join-form(action='/auth/join' method="POST")
+                input(type='text' name='nick' placeholder='닉네임' maxlength=10 required)
+                input(type='email' name='email' placeholder='이메일' maxlength=20 required)
+                input(type='password' id='pwd' name='pwd' placeholder='비밀번호' required)
+                input(type='password' id='pwdck' name='pwdck' placeholder='비밀번호 확인' required)
+                input(type='text' name='comment' placeholder='한 줄 자기소개' maxlength=20)
                 button(type='submit')= '회원가입'
+
+    script.
+        document.querySelector('.main-join-form').addEventListener('submit', e => {
+            const pwd = document.getElementById('pwd').value;
+            const pwdck = document.getElementById('pwdck').value;
+
+            if (pwd !== pwdck) {
+                e.preventDefault();
+                alert('비밀번호가 틀립니다.');
+            }
+        });

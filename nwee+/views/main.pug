@@ -1,20 +1,21 @@
 extends layout
 
-block main
+block content
     .main
         if user && user.id
             .main-header
                 h2= '타임라인'
-                form.main-header-form
+                form.main-header-form(action='/hashtag')
                     span
                         i.fa.fa-search
                     input(type='search' placeholder='해시태그 검색')
             .main-post
-                .main-post-profile
-                    .main-post-profile-image
-                    .main-post-profile-name= '나동'
-                .main-post-wrap
-                    .main-post-comment= '가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 '
-                    .main-post-detail
-                        a(href='#')= '지우기'
-                        span= '몇분 전'
+                for twit in twits
+                    .main-post-profile
+                        .main-post-profile-image
+                        .main-post-profile-name= twits.userId
+                    .main-post-wrap
+                        .main-post-comment= twits.postContent
+                        .main-post-detail
+                            a(href='#')= '지우기'
+                            span= '몇분 전'

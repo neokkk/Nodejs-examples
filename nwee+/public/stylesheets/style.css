@@ -147,7 +147,6 @@ a { text-decoration: none }
 
 .nav-login-form form input {
   font-size: 12px;
-  color: #dbdbdb;
   height: 35px;
   padding: 10px;
   margin-bottom: 15px;
@@ -288,10 +287,6 @@ a { text-decoration: none }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-.main-post-comment {
-  
 }
 
 .main-post-detail {

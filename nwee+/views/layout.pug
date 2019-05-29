@@ -19,16 +19,17 @@ html
           .nav-profile
             div
               .nav-profile-image
+                img(src= user.imgUrl)
               .nav-profile-detail
-                span= '나동'
-                span= '자기소개 해주세요'
+                span= user.nickname
+                span= user.comment
               a.nav-profile-edit= '프로필 수정'
             ul
               li= '트윗'
               li= '팔로잉'
               li= '팔로워'
             form
-              textarea(style='resize:none' placeholder='새 트윗 작성' required)
+              textarea(style='resize:none' placeholder='새 트윗 작성' required max-length=300)
           include trend
         else
           .nav-login
@@ -36,8 +37,8 @@ html
             .nav-login-form
               h3= '계정이 있으신가요?'
               form(action="/auth/login" method="POST")
-                input(type='text' placeholder='이메일')
-                input(type='password' placeholder='비밀번호')
+                input(type='email' name='email' placeholder='이메일' required)
+                input(type='password' name='pwd' placeholder='비밀번호' required)
                 div
                   a(href='/auth/kakao')
                     button(type='button')= '카카오톡 로그인'
@@ -47,4 +48,4 @@ html
                     button(type='button')= '회원가입'
           include trend
 
-      block main
+      block content
