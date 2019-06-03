@@ -316,17 +316,8 @@ a { text-decoration: none }
   width: 110px;
   height: 110px;
   border-radius: 50%;
-  background-color: #ee5959;
+  border: 1px solid #ee5959;
   margin-top: 8px;
-}
-
-.main-join #upload {
-  position: absolute;
-  top: 40px;
-  left: 245px;
-  width: 110px;
-  height: 110px;
-  opacity: 0;
 }
 
 .main-join h3 {
@@ -340,6 +331,15 @@ a { text-decoration: none }
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+}
+
+.main-join-form #pfImg {
+  position: absolute;
+  top: 40px;
+  left: 245px;
+  width: 110px;
+  height: 110px;
+  opacity: 0;
 }
 
 .main-join-form input {

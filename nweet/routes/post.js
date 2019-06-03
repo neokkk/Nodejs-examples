@@ -17,7 +17,7 @@ const upload = multer({
             cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext)
         }
     }),
-    limit: { fileSize: 5 * 1024 * 1024 } // byte 단위
+    limits: { fileSize: 5 * 1024 * 1024 } // byte 단위
 });
 
 // upload 할 img가 있을 경우

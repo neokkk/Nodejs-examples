@@ -19,12 +19,13 @@ const upload = multer({
             cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext);
         }
     }),
-    limit: { fileSize: 5 * 1024 * 1024 },
+    limits: { fileSize: 5 * 1024 * 1024 },
 });
 
 // post auth join page
 router.post('/join', isNotLoggedIn, upload.single('pfImg'), async (req, res, next) => {
     const { nick, email, pwd, comment } = req.body;
+    console.log(req.body);
 
     try {
         const hash = await bcrypt.hash(pwd, 12);
@@ -35,8 +36,8 @@ router.post('/join', isNotLoggedIn, upload.single('pfImg'), async (req, res, nex
             res.redirect('/join');
         });
 
-        await db.query(`INSERT INTO user (nickname, email, password, imgUrl, comment, joindDate) VALUES (?, ?, ?, ?, Now())`,
-            [`${nick}`, `${email}`, `${hash}`, `${req.file.path}`, `${comment}`], (err, result) => {
+        await db.query(`INSERT INTO user (nickname, email, password, imgUrl, comment, joinDate) VALUES (?, ?, ?, ?, ?, Now())`,
+            [ nick, email, hash, req.file.path || '', comment], (err, result) => {
                 if (err) throw err;
                 console.log(result);
                 res.redirect('/');
@@ -57,7 +58,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 
         if (!user) {
             req.flash('loginError', info.message);
-            return res.redirect('/');
+            res.redirect('/');
         }
 
         return req.login((user, loginError) => {
@@ -65,7 +66,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
                 console.error(loginError);
                 next(loginError);
             }
-            return res.redirect('/');
+            res.redirect('/');
         });
     })(req, res, next);
 });
