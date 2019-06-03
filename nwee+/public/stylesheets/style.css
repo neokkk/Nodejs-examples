@@ -309,6 +309,7 @@ a { text-decoration: none }
   align-items: center;
   padding: 30px;
   box-sizing: border-box;
+  position: relative;
 }
 
 .main-join img {
@@ -316,7 +317,16 @@ a { text-decoration: none }
   height: 110px;
   border-radius: 50%;
   background-color: #ee5959;
-  margin-top: 10px;
+  margin-top: 8px;
+}
+
+.main-join #upload {
+  position: absolute;
+  top: 40px;
+  left: 245px;
+  width: 110px;
+  height: 110px;
+  opacity: 0;
 }
 
 .main-join h3 {

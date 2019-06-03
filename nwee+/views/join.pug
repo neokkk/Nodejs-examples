@@ -8,6 +8,7 @@ block content
             img(src='')
             h3= '프로필 사진을 설정하세요'
             form.main-join-form(action='/auth/join' method="POST")
+                input(type='file' id='pfImg' name='pfImg' accept='image/*')
                 input(type='text' name='nick' placeholder='닉네임' maxlength=10 required)
                 input(type='email' name='email' placeholder='이메일' maxlength=20 required)
                 input(type='password' id='pwd' name='pwd' placeholder='비밀번호' required)

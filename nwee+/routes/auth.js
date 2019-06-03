@@ -1,14 +1,30 @@
 const express = require('express'),
+      path = require('path'),
       passport = require('passport'),
-      bcrypt = require('bcrypt');
+      bcrypt = require('bcrypt'),
+      multer = require('multer');
 
 const router = express.Router();
 
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const db = require('../models');
 
-router.post('/join', isNotLoggedIn, async (req, res, next) => {
-    const { nick, email, pwd, pwdck, comment } = req.body;
+const upload = multer({
+    storage: multer.diskStorage({
+        destination(req, file, cb) {
+            cb(null, 'uploads/');
+        },
+        filename(req, file, cb) {
+            const ext = path.extname(file.originalname);
+            cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext);
+        }
+    }),
+    limit: { fileSize: 5 * 1024 * 1024 },
+});
+
+// post auth join page
+router.post('/join', isNotLoggedIn, upload.single('pfImg'), async (req, res, next) => {
+    const { nick, email, pwd, comment } = req.body;
 
     try {
         const hash = await bcrypt.hash(pwd, 12);
@@ -19,11 +35,11 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
             res.redirect('/join');
         });
 
-        await db.query(`INSERT INTO user (nickname, email, password, comment, joindDate) VALUES (?, ?, ?, ?, Now())`,
-            [`${nick}`, `${email}`, `${hash}`, `${comment}`], (err, result) => {
+        await db.query(`INSERT INTO user (nickname, email, password, imgUrl, comment, joindDate) VALUES (?, ?, ?, ?, Now())`,
+            [`${nick}`, `${email}`, `${hash}`, `${req.file.path}`, `${comment}`], (err, result) => {
                 if (err) throw err;
                 console.log(result);
-                res.render('main');
+                res.redirect('/');
         });
     } catch (err) {
         console.error(err);
@@ -31,7 +47,8 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
     }
 });
 
-router.post('login', isNotLoggedIn, (req, res, next) => {
+// post 
+router.post('/login', isNotLoggedIn, (req, res, next) => {
     passport.authenticate('local', (authError, user, info) => {
         if (authError) {
             console.error(authError);
