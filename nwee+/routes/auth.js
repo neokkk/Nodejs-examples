@@ -23,24 +23,27 @@ const upload = multer({
 });
 
 // post auth join page
-router.post('/join', isNotLoggedIn, upload.single('pfImg'), async (req, res, next) => {
+router.post('/join', isNotLoggedIn, async (req, res, next) => {
     const { nick, email, pwd, comment } = req.body;
     console.log(req.body);
 
     try {
         const hash = await bcrypt.hash(pwd, 12);
 
-        await db.query(`SELECT * FROM user WHERE email=${email}`, (err, result) => {
+        await db.query(`SELECT * FROM user WHERE email='${email}'`, (err, result) => {
             if (err) throw err;
-            if (result) console.error('이미 존재하는 사용자입니다.');
-            res.redirect('/join');
-        });
-
-        await db.query(`INSERT INTO user (nickname, email, password, imgUrl, comment, joinDate) VALUES (?, ?, ?, ?, ?, Now())`,
-            [ nick, email, hash, req.file.path || '', comment], (err, result) => {
-                if (err) throw err;
-                console.log(result);
-                res.redirect('/');
+            if (result.length === 0) {
+                upload.single('pfImg');
+                db.query(`INSERT INTO user (nickname, email, password, imgUrl, comment, joinDate) VALUES (?, ?, ?, ?, ?, Now())`,
+                    [ `${nick}`, `${email}`, `${hash}`, `${req.file && req.file.path}` || '', `${comment}`], (err, result) => {
+                        if (err) throw err;
+                        res.redirect('/');
+                });
+            } else {
+                console.error('이미 존재하는 사람입니다.');
+                req.flash('joinError', '이미 존재하는 사용자입니다.');
+                res.redirect('/join');
+            }
         });
     } catch (err) {
         console.error(err);
