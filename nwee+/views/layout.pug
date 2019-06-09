@@ -37,7 +37,7 @@ html
             .nav-login-form
               h3= '계정이 있으신가요?'
               form(action="/auth/login" method="POST")
-                input(type='email' name='email' placeholder='이메일' required)
+                input(type='email' name='email' placeholder='이메일' required autofocus)
                 input(type='password' name='pwd' placeholder='비밀번호' required)
                 div
                   a(href='/auth/kakao')

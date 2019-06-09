@@ -1,4 +1,5 @@
 const express = require('express'),
+      bodyParser = require('body-parser'),
       cookieParser = require('cookie-parser'),
       morgan = require('morgan'),
       path = require('path'),
@@ -29,6 +30,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/img', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(session({
     resave: false,

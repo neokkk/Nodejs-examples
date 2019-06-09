@@ -5,10 +5,7 @@ block content
         .main-header
             h2= '회원가입'
         .main-join
-            img(id='pvImg' src='')
-            h3= '프로필 사진을 설정하세요'
-            form.main-join-form(action='/auth/join' method="POST" enctype='multipart/form-data')
-                input(type='file' id='pfImg' name='pfImg' accept='image/*')
+            form.main-join-form(action='/auth/join' method="POST")
                 input(type='text' name='nick' placeholder='닉네임' maxlength=10 required)
                 input(type='email' name='email' placeholder='이메일' maxlength=20 required)
                 input(type='password' id='pwd' name='pwd' placeholder='비밀번호' required)
@@ -26,11 +23,4 @@ block content
                 alert('비밀번호가 틀립니다.');
             }
         });
-        document.querySelector('#pfImg').addEventListener('change', function() {
-            const reader = new FileReader();
-            reader.readAsDataURL(this.files[0]);
-
-            reader.addEventListener('load', () => {
-                document.querySelector('#pvImg').src = reader.result;
-            });
-        });
+        console.log(user);

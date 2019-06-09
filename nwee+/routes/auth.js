@@ -1,31 +1,16 @@
 const express = require('express'),
       path = require('path'),
       passport = require('passport'),
-      bcrypt = require('bcrypt'),
-      multer = require('multer');
+      bcrypt = require('bcrypt');
 
 const router = express.Router();
 
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const db = require('../models');
 
-const upload = multer({
-    storage: multer.diskStorage({
-        destination(req, file, cb) {
-            cb(null, 'uploads/');
-        },
-        filename(req, file, cb) {
-            const ext = path.extname(file.originalname);
-            cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext);
-        }
-    }),
-    limits: { fileSize: 5 * 1024 * 1024 },
-});
-
 // post auth join page
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
     const { nick, email, pwd, comment } = req.body;
-    console.log(req.body);
 
     try {
         const hash = await bcrypt.hash(pwd, 12);
@@ -33,9 +18,8 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
         await db.query(`SELECT * FROM user WHERE email='${email}'`, (err, result) => {
             if (err) throw err;
             if (result.length === 0) {
-                upload.single('pfImg');
-                db.query(`INSERT INTO user (nickname, email, password, imgUrl, comment, joinDate) VALUES (?, ?, ?, ?, ?, Now())`,
-                    [ `${nick}`, `${email}`, `${hash}`, `${req.file && req.file.path}` || '', `${comment}`], (err, result) => {
+                db.query(`INSERT INTO user (nickname, email, password, comment, joinDate) VALUES (?, ?, ?, ?, Now())`,
+                    [ `${nick}`, `${email}`, `${hash}`, `${comment}`], (err, result) => {
                         if (err) throw err;
                         res.redirect('/');
                 });
@@ -64,7 +48,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
             res.redirect('/');
         }
 
-        return req.login((user, loginError) => {
+        req.login(user, loginError => {
             if (loginError) {
                 console.error(loginError);
                 next(loginError);
@@ -74,7 +58,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
     })(req, res, next);
 });
 
-router.get('/logout', isLoggedIn, (req, rex) => {
+router.get('/logout', isLoggedIn, (req, res) => {
     req.logout();
     req.session.destroy();
     res.redirect('/');

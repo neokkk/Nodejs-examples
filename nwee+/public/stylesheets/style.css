@@ -183,6 +183,7 @@ a { text-decoration: none }
   height: 190px;
   background-color: white;
   padding: 30px;
+  margin-bottom: 10px;
   box-sizing: border-box;
 }
 
@@ -211,6 +212,7 @@ a { text-decoration: none }
   height: 500px;
   background-color: white;
   margin-top: 70px;
+  margin-bottom: 10px;
 }
 
 /* main header */
@@ -330,16 +332,7 @@ a { text-decoration: none }
 .main-join-form {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
-}
-
-.main-join-form #pfImg {
-  position: absolute;
-  top: 40px;
-  left: 245px;
-  width: 110px;
-  height: 110px;
-  opacity: 0;
+  margin-top: 60px;
 }
 
 .main-join-form input {
@@ -347,7 +340,7 @@ a { text-decoration: none }
   width: 290px;
   height: 35px;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   box-sizing: border-box;
 }
 
@@ -357,5 +350,6 @@ a { text-decoration: none }
   border: 1px solid #ee5959;
   color: #ee5959;
   background-color: white;
+  margin-top: 30px;
   box-sizing: border-box;
 }
