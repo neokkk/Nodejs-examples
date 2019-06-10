@@ -11,7 +11,6 @@ module.exports = passport => {
         try {
             // 기존 유저가 있는지 검사
             await db.query(`SELECT * FROM user WHERE email='${email}'`, (err, result) => {
-                console.log(result);
                 if (result) {
                     // 비밀번호 검사
                     const compare = bcrypt.compare(password, result.password);

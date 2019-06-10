@@ -1,5 +1,4 @@
 const express = require('express'),
-      path = require('path'),
       passport = require('passport'),
       bcrypt = require('bcrypt');
 
@@ -24,7 +23,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
                         res.redirect('/');
                 });
             } else {
-                console.error('이미 존재하는 사람입니다.');
+                console.error('이미 존재하는 사용자입니다.');
                 req.flash('joinError', '이미 존재하는 사용자입니다.');
                 res.redirect('/join');
             }
@@ -35,7 +34,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
     }
 });
 
-// post 
+// post auth login page
 router.post('/login', isNotLoggedIn, (req, res, next) => {
     passport.authenticate('local', (authError, user, info) => {
         if (authError) {
@@ -58,6 +57,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
     })(req, res, next);
 });
 
+// get auth logout page
 router.get('/logout', isLoggedIn, (req, res) => {
     req.logout();
     req.session.destroy();

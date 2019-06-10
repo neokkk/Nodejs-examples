@@ -8,7 +8,7 @@ module.exports = passport => {
         done(null, user.id); // done(err, success, fail)
     });
 
-    passport.deserializeUser((id, done) => { // request 마다 어떻게 object를 만든 것인지
+    passport.deserializeUser((id, done) => { // request 마다 어떻게 user object를 만들 것인지
         db.query(`SELECT * FROM user WHERE id='${id}'`, (err, result) => {
             if (err) throw err;
             done(null, result);

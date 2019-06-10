@@ -17,19 +17,34 @@ html
       .nav
         if user && user.id
           .nav-profile
-            div
-              .nav-profile-image
+            .nav-profile-wrap
+              if user.imgUrl
                 img(src= user.imgUrl)
-              .nav-profile-detail
-                span= user.nickname
-                span= user.comment
-              a.nav-profile-edit= '프로필 수정'
+              else
+                img
+                .nav-profile-detail
+                  div.nav-profile-else
+                    a.nav-profile-edit= '프로필 수정'
+                    a.nav-profile-logout= '로그아웃'
+                  div.nav-profile-user
+                    span= user.nickname
+                    span= user.comment
             ul
-              li= '트윗'
-              li= '팔로잉'
-              li= '팔로워'
-            form
-              textarea(style='resize:none' placeholder='새 트윗 작성' required max-length=300)
+              li= '2016'
+                span= ' 트윗'
+              li= '10'
+                span= ' 팔로우'
+              li= '23'
+                span= ' 팔로워'
+            form.nav-form(action='/post' method='post' enctype='multipart/form-data')
+              textarea(style='resize:none' placeholder='새 트윗 작성' max-length=300 required)
+              .nav-form-upload
+                i.fas.fa-folder
+                input(type='file' accept='image/*')
+                button(type='submit')='nwit'
+              .nav-form-preview
+                img(url='' style='display: none;' alt='미리보기')
+                input(type='hidden')
           include trend
         else
           .nav-login
@@ -47,5 +62,8 @@ html
                   a(href='/join')
                     button(type='button')= '회원가입'
           include trend
-
+        
       block content
+
+  script.
+    document.querySelector('')
