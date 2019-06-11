@@ -10,12 +10,13 @@ block content
                         i.fa.fa-search
                     input(type='search' placeholder='해시태그 검색')
             .main-post
-                for twit in twits
-                    .main-post-profile
-                        .main-post-profile-image
-                        .main-post-profile-name= twits.userId
-                    .main-post-wrap
-                        .main-post-comment= twits.postContent
-                        .main-post-detail
-                            a(href='#')= '지우기'
-                            span= '몇분 전'
+                if post
+                    for twit in twits
+                        .main-post-profile
+                            .main-post-profile-image
+                            .main-post-profile-name= twits.userId
+                        .main-post-wrap
+                            .main-post-comment= twits.postContent
+                            .main-post-detail
+                                a(href='#')= '지우기'
+                                span= '몇분 전'

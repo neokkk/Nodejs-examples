@@ -18,23 +18,20 @@ html
         if user && user.id
           .nav-profile
             .nav-profile-wrap
-              if user.imgUrl
-                img(src= user.imgUrl)
-              else
-                img
-                .nav-profile-detail
-                  div.nav-profile-else
-                    a.nav-profile-edit= '프로필 수정'
-                    a.nav-profile-logout= '로그아웃'
-                  div.nav-profile-user
-                    span= user.nickname
-                    span= user.comment
+              img
+              .nav-profile-detail
+                div.nav-profile-else
+                  a.nav-profile-edit= '프로필 수정'
+                  a.nav-profile-logout(href='/auth/logout')= '로그아웃'
+                div.nav-profile-user
+                  span= user.nickname
+                  span= user.comment
             ul
-              li= '2016'
+              li= 0
                 span= ' 트윗'
-              li= '10'
+              li= 0
                 span= ' 팔로우'
-              li= '23'
+              li= 0
                 span= ' 팔로워'
             form.nav-form(action='/post' method='post' enctype='multipart/form-data')
               textarea(style='resize:none' placeholder='새 트윗 작성' max-length=300 required)
@@ -66,4 +63,3 @@ html
       block content
 
   script.
-    document.querySelector('')

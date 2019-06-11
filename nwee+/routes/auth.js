@@ -18,8 +18,8 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
             if (err) throw err;
             if (result.length === 0) {
                 db.query(`INSERT INTO user (nickname, email, password, comment, joinDate) VALUES (?, ?, ?, ?, Now())`,
-                    [ `${nick}`, `${email}`, `${hash}`, `${comment}`], (err, result) => {
-                        if (err) throw err;
+                    [ `${nick}`, `${email}`, `${hash}`, `${comment}`], (err2, result2) => {
+                        if (err2) throw err2;
                         res.redirect('/');
                 });
             } else {
@@ -37,22 +37,24 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
 // post auth login page
 router.post('/login', isNotLoggedIn, (req, res, next) => {
     passport.authenticate('local', (authError, user, info) => {
+        req.session.save();
+
         if (authError) {
             console.error(authError);
             next(authError);
         }
 
         if (!user) {
-            req.flash('loginError', info.message);
+            req.flash('loginError', '로그인에 실패하였습니다.');
             res.redirect('/');
         }
 
-        req.login(user, loginError => {
+        return req.login(user, loginError => {
             if (loginError) {
                 console.error(loginError);
                 next(loginError);
             }
-            res.redirect('/');
+            res.render('main', { user });
         });
     })(req, res, next);
 });
@@ -63,5 +65,14 @@ router.get('/logout', isLoggedIn, (req, res) => {
     req.session.destroy();
     res.redirect('/');
 });
+
+// get auth kakao page
+router.get('/kakao', passport.authenticate('kakao'));
+
+// get auth kakao callback page
+router.get('/kakao/callback', passport.authenticate('kakao', { failureRedirect: '/' }), 
+    (req, res) => { res.redirect('/') }
+);
+
 
 module.exports = router;
