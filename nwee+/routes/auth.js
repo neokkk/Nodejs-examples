@@ -71,7 +71,9 @@ router.get('/kakao', passport.authenticate('kakao'));
 
 // get auth kakao callback page
 router.get('/kakao/callback', passport.authenticate('kakao', { failureRedirect: '/' }), 
-    (req, res) => { res.redirect('/') }
+    (req, res) => {
+        res.render('main', { user: req.user })
+    }
 );
 
 

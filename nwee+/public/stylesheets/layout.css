@@ -7,7 +7,11 @@ body {
   margin: 0;
   padding: 0;
 }
-a { text-decoration: none }
+a { 
+  color: inherit;
+  text-decoration: none;
+}
+
 a:visited {
   color: inherit;
 }
@@ -266,152 +270,4 @@ a:visited {
 .nav-trend ul li {
   color: #ee5959;
   margin: 5px 0;
-}
-
-/* main */
-.main {
-  width: 600px;
-  height: 500px;
-  background-color: white;
-  margin-top: 70px;
-  margin-bottom: 10px;
-}
-
-/* main header */
-.main-header {
-  padding: 20px 30px;
-  border-bottom: 1px solid #eeeeee;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-}
-
-.main-header h2 {
-  font-size: 18px;
-  font-weight: 300;
-  color: #454545;
-  margin: 0;
-}
-
-.main-header-form {
-  position: relative;
-}
-
-.main-header-form span {
-  color: rgb(180, 180, 180);
-  font-size: 12px;
-  position: absolute;
-  top: 4px;
-  right: 15px;
-  z-index: 1;
-}
-
-.main-header-form input {
-  width: 200px;
-  height: 30px;
-  font-size: 12px;
-  box-sizing: border-box;
-  padding-left: 10px;
-  position: absolute;
-  top: -5px;
-  right: 5px;
-}
-
-/* main post */
-.main-post {
-  font-size: 12px;
-  height: 120px;
-  display: flex;
-  padding: 30px;
-  border: 1px solid #eeeeee;
-}
-
-.main-post-profile {
-  width: 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.main-post-profile-image {
-  height: 60px;
-  background-color: #454545;
-  border-radius: 50%;
-}
-
-.main-post-profile-name {
-  color: #454545;
-  font-weight: 600;
-  text-align: center;
-}
-
-.main-post-wrap {
-  width: 450px;
-  margin-left: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.main-post-detail {
-  color: #ee5959;
-  display: flex;
-  justify-content: space-between;
-}
-
-.main-post-detail a {
-  color: #ee5959;
-  text-decoration: none;
-}
-
-/* main join */
-.main-join {
-  height: 519px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px;
-  box-sizing: border-box;
-  position: relative;
-}
-
-.main-join img {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  border: 1px solid #ee5959;
-  margin-top: 8px;
-}
-
-.main-join h3 {
-  font-size: 10px;
-  font-weight: 200;
-  color: #dbdbdb;
-  margin-top: 30px;
-}
-
-.main-join-form {
-  display: flex;
-  flex-direction: column;
-  margin-top: 60px;
-}
-
-.main-join-form input {
-  font-size: 12px;
-  width: 290px;
-  height: 35px;
-  padding: 10px;
-  margin-bottom: 15px;
-  box-sizing: border-box;
-}
-
-.main-join-form button {
-  font-size: 12px;
-  height: 35px;
-  border: 1px solid #ee5959;
-  color: #ee5959;
-  background-color: white;
-  margin-top: 30px;
-  box-sizing: border-box;
 }

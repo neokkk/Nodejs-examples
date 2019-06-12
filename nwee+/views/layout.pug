@@ -6,7 +6,8 @@ html
     meta(http-equiv='X-UA-Compatile' content='IE=edge')
     link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumBarunGothic@1.0/nanumbarungothicsubset.css")
     link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous")
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/layout.css')
+    link(rel='stylesheet', href='/stylesheets/main.css')
     title= 'ntwee+'
   body
     .container
@@ -34,14 +35,13 @@ html
               li= 0
                 span= ' 팔로워'
             form.nav-form(action='/post' method='post' enctype='multipart/form-data')
-              textarea(style='resize:none' placeholder='새 트윗 작성' max-length=300 required)
+              textarea(name='twit' style='resize:none' placeholder='새 트윗 작성' max-length=200 required)
               .nav-form-upload
                 i.fas.fa-folder
                 input(type='file' accept='image/*')
                 button(type='submit')='nwit'
               .nav-form-preview
                 img(url='' style='display: none;' alt='미리보기')
-                input(type='hidden')
           include trend
         else
           .nav-login
@@ -63,3 +63,11 @@ html
       block content
 
   script.
+    document.querySelector('.nav-form textarea').addEventListener('change', function(e) {
+      const textValue = e.target.value;
+
+      if (textValue.length > 200) { 
+        alert('200자 이상 작성할 수 없습니다.');
+        return this.value = textValue.slice(0, 200);
+      }
+    });

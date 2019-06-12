@@ -10,22 +10,16 @@ module.exports = passport => {
     }, async (email, password, done) => {
         try {
             // 기존 유저가 있는지 검사
-            await db.query(`SELECT * FROM user WHERE email='${email}'`, async (err, result) => {
+            await db.query(`SELECT * FROM user WHERE email='${email}'`, (err, result) => {
                 if (err) throw err;
                 if (result.length > 0) {
                     // 비밀번호 검사
-                    await bcrypt
-                        .hash(password, 12)
-                        .then(hash => {
-                            console.log(hash);
-                            bcrypt
-                                .compare(result[0].password, hash)
-                                .then(resolve => {
-                                    console.log(resolve);
-                                    if (resolve) done(null, result[0]);
-                                    else done(null, false);
-                                })
-                                .catch(err => console.error(err));
+                    bcrypt
+                        .compare(password, result[0].password)
+                        .then(resolve => {
+                            console.log(resolve);
+                            if (resolve) done(null, result[0]);
+                            else done(null, false);
                         })
                         .catch(err => console.error(err));
                 } else {

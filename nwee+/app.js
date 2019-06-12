@@ -11,8 +11,8 @@ const createError = require('http-errors'),
 require('dotenv').config();
 
 const indexRouter = require('./routes/index'),
-      usersRouter = require('./routes/users'),
-      postRouter = require('./routes/posts');
+      usersRouter = require('./routes/user'),
+      postRouter = require('./routes/post');
       authRouter = require('./routes/auth');
 
 const passportConfig = require('./passport');
@@ -44,8 +44,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/posts', postRouter);
+app.use('/user', usersRouter);
+app.use('/post', postRouter);
 app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
