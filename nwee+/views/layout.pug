@@ -2,12 +2,13 @@ doctype html
 html
   head
     meta(charset='UTF-8')
-    meta(name='viewport' content='width=device-width, user-scale=no')
+    meta(name='viewport' content='width=device-width')
     meta(http-equiv='X-UA-Compatile' content='IE=edge')
     link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumBarunGothic@1.0/nanumbarungothicsubset.css")
     link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous")
     link(rel='stylesheet', href='/stylesheets/layout.css')
     link(rel='stylesheet', href='/stylesheets/main.css')
+    script(src="https://unpkg.com/axios/dist/axios.min.js")
     title= 'ntwee+'
   body
     .container
@@ -22,7 +23,7 @@ html
               img
               .nav-profile-detail
                 div.nav-profile-else
-                  a.nav-profile-edit= '프로필 수정'
+                  a.nav-profile-edit(href='/user/edit')= '프로필 수정'
                   a.nav-profile-logout(href='/auth/logout')= '로그아웃'
                 div.nav-profile-user
                   span= user.nickname
@@ -34,14 +35,15 @@ html
                 span= ' 팔로우'
               li= 0
                 span= ' 팔로워'
-            form.nav-form(action='/post' method='post' enctype='multipart/form-data')
+            form.nav-form(action='/post' method='POST')
               textarea(name='twit' style='resize:none' placeholder='새 트윗 작성' max-length=200 required)
+              .nav-form-preview
+                span= '미리보기'
+                img(url='' alt='미리보기')
               .nav-form-upload
                 i.fas.fa-folder
-                input(type='file' accept='image/*')
+                input(type='file' accept='image/*' id='upload')
                 button(type='submit')='nwit'
-              .nav-form-preview
-                img(url='' style='display: none;' alt='미리보기')
           include trend
         else
           .nav-login
@@ -71,3 +73,20 @@ html
         return this.value = textValue.slice(0, 200);
       }
     });
+
+    if (document.querySelector('#upload')) {
+      document.querySelector('#upload').addEventListener('change', function(e) {
+        const fr = new FileReader();
+
+        fr.readAsDataURL(this.files[0]);
+        fr.onload = () => {
+          document.querySelector('.nav-form-preview').style.display = 'flex';
+          document.querySelector('.nav-form-preview img').src = fr.result;
+        }
+        
+        document.querySelector('.nav-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          axios.post('/post/img', { uploadImgUrl: fr.result, uploadContent: this.firstChild.value });
+        });
+      });
+    }

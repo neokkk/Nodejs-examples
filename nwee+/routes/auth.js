@@ -18,7 +18,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
             if (err) throw err;
             if (result.length === 0) {
                 db.query(`INSERT INTO user (nickname, email, password, comment, joinDate) VALUES (?, ?, ?, ?, Now())`,
-                    [ `${nick}`, `${email}`, `${hash}`, `${comment}`], (err2, result2) => {
+                    [ `${nick}`, `${email}`, `${hash}`, `${comment}`], err2 => {
                         if (err2) throw err2;
                         res.redirect('/');
                 });

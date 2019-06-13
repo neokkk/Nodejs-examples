@@ -12,9 +12,12 @@ block content
             .main-post
                 .main-post-profile
                     .main-post-profile-image
-                    .main-post-profile-name= '짹짹'
+                    button.main-post-follow= '팔로우'
+                    .main-post-profile-name= 'twit.userId'
                 .main-post-wrap
-                    .main-post-comment= 'ㅎㅎ'
+                    .main-post-comment= 'twit.postContent'
+                    .main-post-img
+                        img(src='')
                     .main-post-detail
                         a(href='#')= '지우기'
                         span= '몇분 전'

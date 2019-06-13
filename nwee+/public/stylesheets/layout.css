@@ -45,7 +45,6 @@ a:visited {
 /* nav profile */
 .nav-profile {
   font-size: 12px;
-  height: 380px;
   margin-bottom: 10px;
   background-color: white;
   display: flex;
@@ -86,6 +85,10 @@ a:visited {
   color: #dbdbdb;
 }
 
+.nav-profile-edit:hover {
+  color: #ee5959;
+}
+
 .nav-profile-logout:hover {
   color: #ee5959;
 }
@@ -120,28 +123,30 @@ a:visited {
 
 .nav-form {
   width: 100%;
-  height: 185px;
   padding: 0 10px 10px 10px;
   margin-top: -5px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .nav-form textarea {
+  color: #454545;
   font-size: 12px;
   font-family: 'NanumBarunGothic', sans-serif;
   font-weight: 200;
   width: 100%;
-  height: 100%;
+  height: 153px;
   padding: 10px;
+  margin-bottom: 10px;
   box-sizing: border-box;
 }
 
 .nav-form-upload {
-  height: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 5px;
   box-sizing: border-box;
   position: relative;
 }
@@ -172,6 +177,23 @@ a:visited {
   color: white;
   background-color: #ee5959;
   border: none;
+}
+
+.nav-form-preview {
+  height: 130px;
+  border: 0.5px solid #a9a9a9;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: none;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.nav-form-preview img {
+  width: 110px;
+  height: 110px;
+  background-color: gray;
 }
 
 /* nav login */

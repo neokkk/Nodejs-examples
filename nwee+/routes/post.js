@@ -20,8 +20,23 @@ const upload = multer({
     limits: { fileSize: 5 * 1024 * 1024 }
 });
 
-router.post('/', (req, res, next) => {
-    console.log(req.body);
+router.post('/', isLoggedIn, async (req, res, next) => {
+    try {
+        await db.query(`INSERT INTO post (postContent, postCreatedAt, userId) VALUES (?, Now(), ?)`,
+            [`${req.body.twit}`, `${req.user.id}`], err => { if (err) throw err; }
+        );
+        await db.query(`SELECT * FROM post`, (err, result) => {
+            if (err) throw err;
+            res.render('main', { twits: result });
+        });
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
+
+router.post('/img', (req, res, next) => {
+    axios.post('/post', { data: req.body });
 });
 
 module.exports = router;
