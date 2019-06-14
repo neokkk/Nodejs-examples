@@ -20,23 +20,36 @@ const upload = multer({
     limits: { fileSize: 5 * 1024 * 1024 }
 });
 
-router.post('/', isLoggedIn, async (req, res, next) => {
+const upload2 = multer();
+
+router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
     try {
-        await db.query(`INSERT INTO post (postContent, postCreatedAt, userId) VALUES (?, Now(), ?)`,
-            [`${req.body.twit}`, `${req.user.id}`], err => { if (err) throw err; }
-        );
-        await db.query(`SELECT * FROM post`, (err, result) => {
-            if (err) throw err;
-            res.render('main', { twits: result });
-        });
+        await db.query(`INSERT INTO post (postContent, postImgUrl, postCreatedAt, userId) VALUES (?, ?, Now(), ?)`,
+            [`${req.body.twit}`, req.files ? `${req.files}` : null, `${req.user.id}`], err => { 
+                if (err) throw err; 
+                res.redirect('/');
+            }
+        )
     } catch (err) {
         console.error(err);
         next(err);
     }
 });
 
-router.post('/img', (req, res, next) => {
-    axios.post('/post', { data: req.body });
+router.post('/img', isLoggedIn, upload.single('upload'), (req, res) => {
+    console.log(req.files);
+});
+
+router.delete('/:id', async (req, res, next) => {
+    try {
+        await db.query(`DELETE * FROM post WHERE id=${req.params.id} and userId='${req.user.id}'`, (err, result) => {
+            res.send('ok');
+            res.redirect('/');
+        });
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
 });
 
 module.exports = router;

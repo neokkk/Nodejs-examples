@@ -9,15 +9,20 @@ block content
                     span
                         i.fa.fa-search
                     input(type='search' placeholder='해시태그 검색')
-            .main-post
-                .main-post-profile
-                    .main-post-profile-image
-                    button.main-post-follow= '팔로우'
-                    .main-post-profile-name= 'twit.userId'
-                .main-post-wrap
-                    .main-post-comment= 'twit.postContent'
-                    .main-post-img
-                        img(src='')
-                    .main-post-detail
-                        a(href='#')= '지우기'
-                        span= '몇분 전'
+            if twits
+                for twits in twit
+                    .main-post
+                        input.twit-user-id(type='hidden' value= twit.userId)
+                        input.twit-id(type='hidden' value= twit.postId)
+                        .main-post-profile
+                            .main-post-profile-image
+                            button.main-post-follow= '팔로우'
+                            .main-post-profile-name= twit.userId
+                        .main-post-wrap
+                            .main-post-comment= twit.postContent
+                            if twit.postImgUrl
+                                .main-post-img
+                                    img(src= twit.postImgUrl)
+                            .main-post-detail
+                                a(href='#')= '지우기'
+                                span= '몇분 전'

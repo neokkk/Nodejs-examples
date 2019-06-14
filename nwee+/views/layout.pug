@@ -35,8 +35,8 @@ html
                 span= ' 팔로우'
               li= 0
                 span= ' 팔로워'
-            form.nav-form(action='/post' method='POST')
-              textarea(name='twit' style='resize:none' placeholder='새 트윗 작성' max-length=200 required)
+            form.nav-form(action='/post' method='POST' enctype='multipart/form-data')
+              textarea(id='twit' name='twit' style='resize:none' placeholder='새 트윗 작성' max-length=200 required)
               .nav-form-preview
                 span= '미리보기'
                 img(url='' alt='미리보기')
@@ -77,16 +77,18 @@ html
     if (document.querySelector('#upload')) {
       document.querySelector('#upload').addEventListener('change', function(e) {
         const fr = new FileReader();
+        const fd = new FormData();
 
         fr.readAsDataURL(this.files[0]);
+        fd.append('img', this.files[0]);
+
         fr.onload = () => {
           document.querySelector('.nav-form-preview').style.display = 'flex';
           document.querySelector('.nav-form-preview img').src = fr.result;
         }
         
         document.querySelector('.nav-form').addEventListener('submit', function(e) {
-          e.preventDefault();
-          axios.post('/post/img', { uploadImgUrl: fr.result, uploadContent: this.firstChild.value });
+          axios.post('/post/img', { fd });
         });
       });
     }
