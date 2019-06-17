@@ -65,6 +65,7 @@ html
       block content
 
   script.
+    // restricting words length
     document.querySelector('.nav-form textarea').addEventListener('change', function(e) {
       const textValue = e.target.value;
 
@@ -74,6 +75,7 @@ html
       }
     });
 
+    // image upload
     if (document.querySelector('#upload')) {
       document.querySelector('#upload').addEventListener('change', function(e) {
         const fr = new FileReader();
@@ -87,7 +89,7 @@ html
           document.querySelector('.nav-form-preview img').src = fr.result;
         }
         
-        document.querySelector('.nav-form').addEventListener('submit', function(e) {
+        document.querySelector('.nav-form').addEventListener('submit', () => {
           axios.post('/post/img', { fd });
         });
       });

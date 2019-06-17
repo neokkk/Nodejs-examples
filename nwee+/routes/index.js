@@ -10,7 +10,6 @@ router.get('/', async (req, res, next) => {
   try {
     await db.query(`SELECT p.postId, p.postContent, p.postImgUrl, p.postCreatedAt, p.userId, u.nickname, u.imgUrl
       FROM post AS p JOIN user AS u ON p.userId = u.id`, (err, result) => {
-        console.log(result);
         if (err) throw err;
         res.render('main', { twits: result });
     });

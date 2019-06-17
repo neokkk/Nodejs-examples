@@ -25,7 +25,7 @@ const upload2 = multer();
 router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
     try {
         await db.query(`INSERT INTO post (postContent, postImgUrl, postCreatedAt, userId) VALUES (?, ?, Now(), ?)`,
-            [`${req.body.twit}`, req.files ? `${req.files}` : null, `${req.user.id}`], err => { 
+            [`${req.body.twit}`, req.file ? `${req.file}` : null, `${req.user.id}`], err => { 
                 if (err) throw err; 
                 res.redirect('/');
             }
@@ -37,7 +37,7 @@ router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
 });
 
 router.post('/img', isLoggedIn, upload.single('upload'), (req, res) => {
-    console.log(req.files);
+    console.log(req.file);
 });
 
 router.delete('/:id', async (req, res, next) => {
