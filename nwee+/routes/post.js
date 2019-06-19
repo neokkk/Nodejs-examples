@@ -17,17 +17,22 @@ const upload = multer({
             cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext)
         }
     }),
-    limits: { fileSize: 5 * 1024 * 1024 }
+    limits: { fileSize: 5 * 1024 * 1024 },
+    onError: (err, next) => {
+        console.error(err);
+        next(err);
+    }
 });
 
 const upload2 = multer();
 
 router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
+    console.log(3);
     try {
         await db.query(`INSERT INTO post (postContent, postImgUrl, postCreatedAt, userId) VALUES (?, ?, Now(), ?)`,
             [`${req.body.twit}`, req.file ? `${req.file}` : null, `${req.user.id}`], err => { 
                 if (err) throw err; 
-                res.redirect('/');
+                res.render('main', { user: req.user });
             }
         )
     } catch (err) {
@@ -37,7 +42,9 @@ router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
 });
 
 router.post('/img', isLoggedIn, upload.single('upload'), (req, res) => {
+    console.log(req.files);
     console.log(req.file);
+    res.render('main', { user: req.user });
 });
 
 router.delete('/:id', async (req, res, next) => {

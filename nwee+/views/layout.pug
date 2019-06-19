@@ -15,7 +15,6 @@ html
       .header
         a(href='/')
           img.header-logo(src='/images/ball.png' width='30px')
-
       .nav
         if user && user.id
           .nav-profile
@@ -60,24 +59,26 @@ html
                     button(type='submit')= '이메일 로그인'
                   a(href='/join')
                     button(type='button')= '회원가입'
-          include trend
+          include trend 
         
       block content
 
   script.
     // restricting words length
-    document.querySelector('.nav-form textarea').addEventListener('change', function(e) {
-      const textValue = e.target.value;
+    if (document.querySelector('.nav-form textarea')) {
+      document.querySelector('.nav-form textarea').addEventListener('change', function(e) {
+        const textValue = e.target.value;
 
-      if (textValue.length > 200) { 
-        alert('200자 이상 작성할 수 없습니다.');
-        return this.value = textValue.slice(0, 200);
-      }
-    });
+        if (textValue.length > 200) { 
+          alert('200자 이상 작성할 수 없습니다.');
+          return this.value = textValue.slice(0, 200);
+        }
+      });
+    }
 
     // image upload
     if (document.querySelector('#upload')) {
-      document.querySelector('#upload').addEventListener('change', function(e) {
+      document.querySelector('#upload').addEventListener('change', function() {
         const fr = new FileReader();
         const fd = new FormData();
 
@@ -89,8 +90,12 @@ html
           document.querySelector('.nav-form-preview img').src = fr.result;
         }
         
-        document.querySelector('.nav-form').addEventListener('submit', () => {
-          axios.post('/post/img', { fd });
-        });
+        axios({
+          method: 'POST',
+          url: '/post/img',
+          data: { fd },
+          headers: { 'Content-Type': 'multipart/form-data' }
+        }).then(res => console.log(res))
+          .catch(err => console.log(err.response));
       });
     }

@@ -54,13 +54,13 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
                 console.error(loginError);
                 next(loginError);
             }
-            res.redirect('/');
+            res.render('main', { user: req.user });
         });
     })(req, res, next);
 });
 
 // get auth logout page
-router.get('/logout', isLoggedIn, (req, res) => {
+router.get('/logout', (req, res) => {
     req.logout();
     req.session.destroy();
     res.redirect('/');
@@ -72,9 +72,9 @@ router.get('/kakao', passport.authenticate('kakao'));
 // get auth kakao callback page
 router.get('/kakao/callback', passport.authenticate('kakao', { failureRedirect: '/' }), 
     (req, res) => {
-        res.render('main', { user: req.user })
+        res.redirect('/');
     }
-);
+); 
 
 
 module.exports = router;

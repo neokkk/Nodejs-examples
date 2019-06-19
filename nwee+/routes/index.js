@@ -9,9 +9,10 @@ const db = require('../models');
 router.get('/', async (req, res, next) => {
   try {
     await db.query(`SELECT p.postId, p.postContent, p.postImgUrl, p.postCreatedAt, p.userId, u.nickname, u.imgUrl
-      FROM post AS p JOIN user AS u ON p.userId = u.id`, (err, result) => {
-        if (err) throw err;
-        res.render('main', { twits: result });
+      FROM post AS p JOIN user AS u ON p.userId = u.id ORDER BY p.postCreatedAt DESC`, (err, result) => {
+        console.log(result[0]);
+        if (err) { console.error(err) }
+        res.render('main', { user: req.user, twits: result });
     });
   } catch (err) {
     console.error(err);
@@ -22,6 +23,6 @@ router.get('/', async (req, res, next) => {
 // get join page
 router.get('/join', (req, res, next) => {
   res.render('join');
-})
+});
 
 module.exports = router;

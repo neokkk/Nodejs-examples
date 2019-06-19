@@ -10,14 +10,15 @@ block content
                         i.fa.fa-search
                     input(type='search' placeholder='해시태그 검색')
             if twits
-                for twits in twit
+                for twit in twits
                     .main-post
                         input.twit-user-id(type='hidden' value= twit.userId)
-                        input.twit-id(type='hidden' value= twit.postId)
+                        input.twit-post-id(type='hidden' value= twit.postId)
                         .main-post-profile
                             .main-post-profile-image
-                            button.main-post-follow= '팔로우'
-                            .main-post-profile-name= twit.userId
+                            if user.id !== twit.userId 
+                                button.main-post-follow= '팔로우'
+                            .main-post-profile-name= twit.nickname
                         .main-post-wrap
                             .main-post-comment= twit.postContent
                             if twit.postImgUrl
