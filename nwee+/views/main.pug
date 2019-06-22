@@ -25,5 +25,15 @@ block content
                                 .main-post-img
                                     img(src= twit.postImgUrl)
                             .main-post-detail
-                                a(href='#')= '지우기'
+                                if twit.userId === user.id
+                                    a.main-post-delete= '지우기'
+                                else
+                                    a.main-post-delete= ''
                                 span= '몇분 전'
+
+    script.
+        document.querySelectorAll('.main-post-delete').forEach(value => {
+            value.addEventListener('click', e => {
+
+            });
+        });

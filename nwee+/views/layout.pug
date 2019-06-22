@@ -93,8 +93,8 @@ html
         axios({
           method: 'POST',
           url: '/post/img',
-          data: { fd },
-          headers: { 'Content-Type': 'multipart/form-data' }
+          data: fd,
+          config: { headers: { 'Content-Type': 'multipart/form-data' }}
         }).then(res => console.log(res))
           .catch(err => console.log(err.response));
       });

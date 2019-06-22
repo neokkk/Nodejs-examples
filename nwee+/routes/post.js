@@ -27,12 +27,11 @@ const upload = multer({
 const upload2 = multer();
 
 router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
-    console.log(3);
     try {
         await db.query(`INSERT INTO post (postContent, postImgUrl, postCreatedAt, userId) VALUES (?, ?, Now(), ?)`,
             [`${req.body.twit}`, req.file ? `${req.file}` : null, `${req.user.id}`], err => { 
                 if (err) throw err; 
-                res.render('main', { user: req.user });
+                res.redirect('/');
             }
         )
     } catch (err) {
@@ -44,7 +43,7 @@ router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
 router.post('/img', isLoggedIn, upload.single('upload'), (req, res) => {
     console.log(req.files);
     console.log(req.file);
-    res.render('main', { user: req.user });
+    res.redirect('/');
 });
 
 router.delete('/:id', async (req, res, next) => {
