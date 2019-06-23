@@ -96,6 +96,6 @@ html
           data: fd,
           config: { headers: { 'Content-Type': 'multipart/form-data' }}
         }).then(res => console.log(res))
-          .catch(err => console.log(err.response));
+          .catch(err => console.error(err));
       });
     }
