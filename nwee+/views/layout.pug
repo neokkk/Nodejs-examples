@@ -82,7 +82,7 @@ html
         const fr = new FileReader();
         const fd = new FormData();
 
-        fr.readAsDataURL(this.files[0]);
+        fr.readAsDataURL(this.files[0]); 
         fd.append('img', this.files[0]);
 
         fr.onload = () => {

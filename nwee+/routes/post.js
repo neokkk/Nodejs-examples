@@ -26,13 +26,13 @@ const upload = multer({
 
 router.post('/img', isLoggedIn, upload.single('img'), (req, res) => {
     console.log(req.file);
-    res.send({ url: `/uploads/${req.file.filename}` });
+    res.send({ uploadFile: `/uploads/${req.file.filename}` });
 });
 
 const upload2 = multer();
 
 router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
-    console.log(req.body);
+    console.log(req);
     console.error();
     try {
         await db.query(`INSERT INTO post (postContent, postImgUrl, postCreatedAt, userId) VALUES (?, ?, Now(), ?)`,
