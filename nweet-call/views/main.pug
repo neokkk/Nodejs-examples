@@ -1,0 +1,20 @@
+doctype
+html
+    head
+        title= '프론트 API 요청'
+    body
+        #result
+        script.
+            const xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === xhr.DONE) {
+                    document.querySelector('#result').textContent = xhr.responseText;
+                } else {
+                    console.error(xhr.responseText);
+                }
+            }
+
+            xhr.open('POST', 'http://localhost:8002/v2/token');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({ clientSeceret: '#{key}' }));

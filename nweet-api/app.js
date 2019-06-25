@@ -12,7 +12,8 @@ const { sequelize } = require('./models'),
       passportConfig = require('./passport'),
       authRouter = require('./routes/auth'),
       indexRouter = require('./routes/index'),
-      v1 = require('./routes/v1');
+      v1 = require('./routes/v1'),
+      v2 = require('./routes/v2');
 
 const app = express();
 sequelize.sync();
@@ -43,6 +44,7 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/v1', v1);
+app.use('/v2', v2);
 
 app.use((req, res, next) => {
     const err = new Error('Not Found');
