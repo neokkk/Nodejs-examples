@@ -29,6 +29,7 @@ router.post('/img', isLoggedIn, upload.single('img'), (req, res) => { // input�
 const upload2 = multer();
 // upload 할 img가 없을 경우
 router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
+    console.log(req.body.url);
     try {
         const post = await Post.create({
             content: req.body.content,

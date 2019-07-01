@@ -19,7 +19,7 @@ router.post('/profile', isLoggedIn, async (req, res, next) => {
 });
 
 router.post('/:id/follow', isLoggedIn, async (req, res, next) => {
-    try {
+    try { 
         const user = await User.find({ where: { id: req.user.id } });
         await user.addFollowing(parseInt(req.params.id, 10));
         res.redirect('/');

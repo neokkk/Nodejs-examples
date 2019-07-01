@@ -42,9 +42,9 @@ block content
   script.
     // image upload
     if (document.getElementById('img')) {
-      document.getElementById('img').addEventListener('change', e => {
+      document.getElementById('img').addEventListener('change', function(e) {
         const formData = new FormData();
-        console.log(this, this.files);
+        console.log(this, this.files[0]);
         formData.append('img', this.files[0]);
 
         const xhr = new XMLHttpRequest();
@@ -135,7 +135,7 @@ block content
           xhr.open('POST', '/post/' + twitId + '/like');
           xhr.send();
         }
-      });
+      }); 
     });
 
     // unlike btn
