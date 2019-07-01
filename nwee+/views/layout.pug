@@ -22,7 +22,8 @@ html
               img
               .nav-profile-detail
                 div.nav-profile-else
-                  a.nav-profile-edit(href='/user/edit')= '프로필 수정'
+                  input#my-id(type='hidden' value= user.id)
+                  a.nav-profile-edit(href='/user')= '프로필 수정'
                   a.nav-profile-logout(href='/auth/logout')= '로그아웃'
                 div.nav-profile-user
                   span= user.nickname
@@ -35,6 +36,7 @@ html
               li= 0
                 span= ' 팔로워'
             form.nav-form(action='/post' method='POST' enctype='multipart/form-data')
+              input(type='hidden' id='url' name='url')
               textarea(id='twit' name='twit' style='resize:none' placeholder='새 트윗 작성' max-length=200 required)
               .nav-form-preview
                 span= '미리보기'
@@ -95,7 +97,11 @@ html
           url: '/post/img',
           data: fd,
           config: { headers: { 'Content-Type': 'multipart/form-data' }}
-        }).then(res => console.log(res))
+        }).then(result => {
+            const { uploadFile } = result.data;
+
+            document.querySelector('#url').value = uploadFile;
+          })
           .catch(err => console.error(err));
       });
     }

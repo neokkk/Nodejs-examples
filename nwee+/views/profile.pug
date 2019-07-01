@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    .main
+        .main-header
+            h2= '프로필 수정'
+        .main-profile
+            img(src='')
+            form.main-profile-form(action='/user/edit' method="POST")
+                input(type='file' id='img' name='img')
+                input(type='text' name='nick' placeholder='닉네임' maxlength=10 required value= user.nickname)
+                input(type='email' name='email' maxlength=20 readOnly value= user.email)
+                input(type='password' id='pwd' name='pwd' placeholder='비밀번호 수정')
+                input(type='password' id='pwdck' name='pwdck' placeholder='비밀번호 확인')
+                input(type='text' name='comment' placeholder='한 줄 자기소개' maxlength=20 value= user.comment)
+                button(type='submit')= '수정'
+
+    script.
+        document.querySelector('.main-profile-form').addEventListener('submit', e => {
+            const pwd = document.getElementById('pwd').value;
+            const pwdck = document.getElementById('pwdck').value;
+
+            if (pwd !== pwdck) {
+                e.preventDefault();
+                alert('비밀번호가 틀립니다.');
+            }
+        });

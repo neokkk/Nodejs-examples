@@ -26,17 +26,18 @@ const upload = multer({
 
 router.post('/img', isLoggedIn, upload.single('img'), (req, res) => {
     console.log(req.file);
-    res.send({ uploadFile: `/uploads/${req.file.filename}` });
+    res.json({ uploadFile: `/uploads/${req.file.filename}` });
 });
 
 const upload2 = multer();
 
 router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
-    console.log(req);
-    console.error();
+    console.log(req.body);
+    const { twit, url } = req.body;
+
     try {
         await db.query(`INSERT INTO post (postContent, postImgUrl, postCreatedAt, userId) VALUES (?, ?, Now(), ?)`,
-            [`${req.body.twit}`, req.file ? `${req.file}` : null, `${req.user.id}`], err => { 
+            [twit, url ? url : null, req.user.id], err => { 
                 if (err) throw err; 
                 res.redirect('/');
             }
@@ -47,13 +48,11 @@ router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
     }
 });
 
-
-
 router.delete('/:id', async (req, res, next) => {
     try {
-        await db.query(`DELETE * FROM post WHERE id=${req.params.id} and userId='${req.user.id}'`, (err, result) => {
-            res.send('ok');
-            res.redirect('/');
+        await db.query(`DELETE FROM post WHERE postId=${req.params.id} and userId=${req.user.id}`, err => {
+            if (err) console.error(err);
+            res.redirect(303, '/');
         });
     } catch (err) {
         console.error(err);

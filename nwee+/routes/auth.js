@@ -4,7 +4,7 @@ const express = require('express'),
 
 const router = express.Router();
 
-const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { isNotLoggedIn } = require('./middlewares');
 const db = require('../models');
 
 // post auth join page

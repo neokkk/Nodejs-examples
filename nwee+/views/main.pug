@@ -16,24 +16,66 @@ block content
                         input.twit-post-id(type='hidden' value= twit.postId)
                         .main-post-profile
                             .main-post-profile-image
+                            .main-post-profile-name= twit.nickname
                             if user.id !== twit.userId 
                                 button.main-post-follow= '팔로우'
-                            .main-post-profile-name= twit.nickname
                         .main-post-wrap
                             .main-post-comment= twit.postContent
                             if twit.postImgUrl
-                                .main-post-img
-                                    img(src= twit.postImgUrl)
+                                img.main-post-img(src= twit.postImgUrl)
                             .main-post-detail
                                 if twit.userId === user.id
                                     a.main-post-delete= '지우기'
                                 else
                                     a.main-post-delete= ''
-                                span= '몇분 전'
+                                span= twit.postCreatedAt.toDateString()
 
     script.
-        document.querySelectorAll('.main-post-delete').forEach(value => {
-            value.addEventListener('click', e => {
 
+        // delete post btn
+        document.querySelectorAll('.main-post-delete').forEach(value => {
+            value.addEventListener('click', () => {
+                const isLoggedIn = document.querySelector('#my-id');
+
+                if (isLoggedIn) {
+                    const twitId = value.parentNode.parentNode.parentNode.querySelector('.twit-post-id').value;
+                    const twitUserId = value.parentNode.parentNode.parentNode.querySelector('.twit-user-id').value;
+                    const myId = isLoggedIn.value;
+
+                    if (twitUserId === myId) {
+                        if (confirm('게시물을 지우시겠습니까?')) {
+                            axios
+                                .delete(`/post/${twitId}`)
+                                .catch(err => {
+                                     console.error(err);
+                                     if (err.response) {
+                                         console.log(err.response);
+                                     } else if (err.request) {
+                                         console.log(err.request);
+                                     } else {
+                                         console.log(err.message);
+                                     }
+                                });
+                        }
+                    }
+                }
+            });
+        });
+
+        // follow btn
+        document.querySelectorAll('.main-post-follow').forEach(value => {
+            value.addEventListener('click', () => {
+                const isLoggedIn = document.querySelector('#my-id');
+
+                if (isLoggedIn) {
+                    const twitUserId = value.parentNode.parentNode.querySelector('.twit-user-id').value;
+                    const myId = isLoggedIn.value;
+
+                    if (twitUserId !== myId) {
+                        if (confirm('팔로잉 하시겠습니까?')) {
+                            axios.post(`/user/${twitUserId}/follow`);
+                        }
+                    }
+                }
             });
         });
