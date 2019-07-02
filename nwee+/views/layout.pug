@@ -19,7 +19,7 @@ html
         if user && user.id
           .nav-profile
             .nav-profile-wrap
-              img
+              img(src= user.imgUrl)
               .nav-profile-detail
                 div.nav-profile-else
                   input#my-id(type='hidden' value= user.id)

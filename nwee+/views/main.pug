@@ -15,10 +15,12 @@ block content
                         input.twit-user-id(type='hidden' value= twit.userId)
                         input.twit-post-id(type='hidden' value= twit.postId)
                         .main-post-profile
-                            .main-post-profile-image
+                            img.main-post-profile-image(src= twit.imgUrl)
                             .main-post-profile-name= twit.nickname
-                            if user.id !== twit.userId 
+                            if user.id !== twit.userId && !follow
                                 button.main-post-follow= '팔로우'
+                            if user.id !== twit.userId && follow
+                                button.main-post-unfollow= '언팔로우'
                         .main-post-wrap
                             .main-post-comment= twit.postContent
                             if twit.postImgUrl
@@ -72,8 +74,26 @@ block content
                     const myId = isLoggedIn.value;
 
                     if (twitUserId !== myId) {
-                        if (confirm('팔로잉 하시겠습니까?')) {
+                        if (confirm('팔로우 하시겠습니까?')) {
                             axios.post(`/user/${twitUserId}/follow`);
+                        }
+                    }
+                }
+            });
+        });
+
+        // unfollow btn
+        document.querySelectorAll('.main-post-unfollow').forEach(value => {
+            value.addEventListener('click', () => {
+                const isLoggedIn = document.querySelector('#my-id');
+
+                if (isLoggedIn) {
+                    const twitUserId = value.parentNode.parentNode.querySelector('.twit-user-id').value;
+                    const myId = isLoggedIn.value;
+
+                    if (twitUserId !== myId) {
+                        if (confirm('언팔로우 하시겠습니까?')) {
+                            axios.delete(`/user/${twitUserId}/follow`);
                         }
                     }
                 }

@@ -5,7 +5,7 @@ block content
         .main-header
             h2= '프로필 수정'
         .main-profile
-            img(src='')
+            img(src= user.imgUrl)
             form.main-profile-form(action='/user/edit' method="POST")
                 input(type='file' id='img' name='img')
                 input(type='text' name='nick' placeholder='닉네임' maxlength=10 required value= user.nickname)
@@ -25,3 +25,5 @@ block content
                 alert('비밀번호가 틀립니다.');
             }
         });
+
+        

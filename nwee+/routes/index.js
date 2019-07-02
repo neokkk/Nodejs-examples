@@ -11,8 +11,8 @@ router.get('/', async (req, res, next) => {
     await db.query(`SELECT p.postId, p.postContent, p.postImgUrl, p.postCreatedAt, p.userId, u.nickname, u.imgUrl
       FROM post AS p JOIN user AS u ON p.userId = u.id ORDER BY p.postCreatedAt DESC`, async (err, result) => {
         if (err) console.error(err)
-        console.log(req.user);
-        res.render('main', { user: req.user, twits: result});
+
+        res.render('main', { user: req.user, twits: result, db });
     });
   } catch (err) {
     console.error(err);
@@ -21,7 +21,7 @@ router.get('/', async (req, res, next) => {
 });
 
 // get join page
-router.get('/join', (req, res, next) => {
+router.get('/join', isNotLoggedIn, (req, res) => {
   res.render('join');
 });
 

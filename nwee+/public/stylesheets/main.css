@@ -72,11 +72,11 @@
   width: 60px;
   height: 60px;
   margin-bottom: 10px;
-  background-color: #454545;
+  border: 1px solid #454545;
   border-radius: 50%;
 }
 
-.main-post-follow {
+.main-post-profile button {
   color: #454545;
   width: 55px;
   height: 20px;
@@ -85,7 +85,7 @@
   margin-top: 10px;
 }
 
-.main-post-follow:hover {
+.main-post-profile button:hover {
   color: white;
   background-color: #ee5959;
 }
