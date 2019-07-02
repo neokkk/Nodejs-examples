@@ -72,8 +72,8 @@
   width: 60px;
   height: 60px;
   margin-bottom: 10px;
-  border: 1px solid #454545;
   border-radius: 50%;
+  background-color: #454545;
 }
 
 .main-post-profile button {

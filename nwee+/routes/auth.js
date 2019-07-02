@@ -1,25 +1,45 @@
 const express = require('express'),
       passport = require('passport'),
+      path = require('path'),
+      multer = require('multer'),
       bcrypt = require('bcrypt');
 
 const router = express.Router();
 
-const { isNotLoggedIn } = require('./middlewares');
 const db = require('../models');
+const { isNotLoggedIn } = require('./middlewares');
+
+const upload = multer({
+    storage: multer.diskStorage({
+        destination(req, file, cb) {
+            cb(null, 'uploads/');
+        },
+        filename(req, file, cb) {
+            const ext = path.extname(file.originalname);
+            cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext);
+        }
+    }),
+    limits: { fileSize: 5 * 1024 * 1024 },
+    onError: (err, next) => {
+        console.error(err);
+        next(err);
+    }
+})
 
 // post auth join page
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
-    const { nick, email, pwd, comment } = req.body;
+    const { nick, email, pwd, comment, joinImg } = req.body;
+    console.log(joinImg);
 
     try {
         const hash = await bcrypt.hash(pwd, 12);
 
         await db.query(`SELECT * FROM user WHERE email='${email}'`, (err, result) => {
-            if (err) throw err;
+            if (err) console.error(err);
             if (result.length === 0) {
-                db.query(`INSERT INTO user (nickname, email, password, comment, joinDate) VALUES (?, ?, ?, ?, Now())`,
-                    [ `${nick}`, `${email}`, `${hash}`, `${comment}`], err2 => {
-                        if (err2) throw err2;
+                db.query(`INSERT INTO user (nickname, email, password, imgUrl, comment, joinDate) VALUES (?, ?, ?, ?, ?, Now())`,
+                    [ `${nick}`, `${email}`, `${hash}`, `${joinImg}`, `${comment}`], err2 => {
+                        if (err2) console.error(err2);
                         res.redirect('/');
                 });
             } else {
@@ -32,6 +52,11 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
         console.error(err);
         next(err);
     }
+});
+
+router.post('/join/img', upload.single('img'), (req, res, next) => {
+    console.log(req.file);
+    res.json({ uploadFile: `/uploads/${req.file.filename}`});
 });
 
 // post auth login page
@@ -54,7 +79,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
                 console.error(loginError);
                 next(loginError);
             }
-            res.render('main', { user: req.user });
+            res.redirect('/');
         });
     })(req, res, next);
 });

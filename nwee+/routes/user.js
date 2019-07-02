@@ -1,4 +1,5 @@
 const express = require('express'),
+      bcrypt = require('bcrypt'),
       router = express.Router();
 
 const { isLoggedIn } = require('./middlewares');
@@ -13,7 +14,9 @@ router.post('/edit', isLoggedIn, async (req, res, next) => {
   const { nick, pwd, comment } = req.body;
 
   try {
-    await db.query(`UPDATE user SET nickname='${nick}', comment='${comment}', updateDate=Now() WHERE email='${req.user.email}'`, (err, result) => {
+    const hash = await bcrypt.hash(pwd, 12);
+
+    await db.query(`UPDATE user SET nickname='${nick}', password='${hash}', comment='${comment}', updateDate=Now() WHERE email='${req.user.email}'`, (err, result) => {
       if (err) console.error(err);
 
       res.redirect('/');

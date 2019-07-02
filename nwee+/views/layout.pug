@@ -97,7 +97,8 @@ html
           url: '/post/img',
           data: fd,
           config: { headers: { 'Content-Type': 'multipart/form-data' }}
-        }).then(result => {
+        })
+          .then(result => {
             const { uploadFile } = result.data;
 
             document.querySelector('#url').value = uploadFile;

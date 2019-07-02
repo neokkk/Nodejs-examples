@@ -5,9 +5,10 @@ block content
         .main-header
             h2= '회원가입'
         .main-join
-            img(src='')
-            form.main-join-form(action='/auth/join' method="POST")
+            img(id='join-preview' src='')
+            form.main-join-form(action='/auth/join' method="POST" enctype='multipart/form-data')
                 input(type='file' id='img' name='img')
+                imput(type='hidden' id='join-img' name='joinImg')
                 input(type='text' name='nick' placeholder='닉네임' maxlength=10 required)
                 input(type='email' name='email' placeholder='이메일' maxlength=20 required)
                 input(type='password' id='pwd' name='pwd' placeholder='비밀번호' required)
@@ -23,5 +24,34 @@ block content
             if (pwd !== pwdck) {
                 e.preventDefault();
                 alert('비밀번호가 틀립니다.');
+            } else {
+                alert('회원가입 되었습니다.');
             }
+        });
+
+        document.querySelector('#img').addEventListener('change', function() {
+            const fr = new FileReader();
+            const fd = new FormData();
+
+            fr.readAsDataURL(this.files[0]);
+            fd.append('img', this.files[0]);
+
+            fr.onload = () => {
+                document.querySelector('#join-preview').src = fr.result;
+            }
+
+            axios({
+                method: 'POST',
+                url: '/auth/join/img',
+                data: fd,
+                config: { headers: { 'Content-Type': 'multipart/form-data' }}
+            })
+                .then(result => {
+                    console.log('result');
+                    console.log(result);
+                    const { uploadFile } = result.data;
+
+                    document.querySelector('#join-img').value = uploadFile;
+                })
+                .catch(err => console.error(err));
         });
