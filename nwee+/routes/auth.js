@@ -1,35 +1,16 @@
 const express = require('express'),
       passport = require('passport'),
-      path = require('path'),
-      multer = require('multer'),
       bcrypt = require('bcrypt');
 
 const router = express.Router();
 
 const db = require('../models');
-const { isNotLoggedIn } = require('./middlewares');
-
-const upload = multer({
-    storage: multer.diskStorage({
-        destination(req, file, cb) {
-            cb(null, 'uploads/');
-        },
-        filename(req, file, cb) {
-            const ext = path.extname(file.originalname);
-            cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext);
-        }
-    }),
-    limits: { fileSize: 5 * 1024 * 1024 },
-    onError: (err, next) => {
-        console.error(err);
-        next(err);
-    }
-})
+const { isNotLoggedIn, upload } = require('./middlewares');
 
 // post auth join page
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
+    console.log(req.body);
     const { nick, email, pwd, comment, joinImg } = req.body;
-    console.log(joinImg);
 
     try {
         const hash = await bcrypt.hash(pwd, 12);
@@ -54,7 +35,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
     }
 });
 
-router.post('/join/img', upload.single('img'), (req, res, next) => {
+router.post('/join/img', upload.single('jimg'), (req, res) => {
     console.log(req.file);
     res.json({ uploadFile: `/uploads/${req.file.filename}`});
 });

@@ -5,9 +5,9 @@ block content
         .main-header
             h2= '회원가입'
         .main-join
-            img(id='join-preview' src='')
+            img(id='join-preview')
             form.main-join-form(action='/auth/join' method="POST" enctype='multipart/form-data')
-                input(type='file' id='img' name='img')
+                input(type='file' id='jimg' name='jimg')
                 imput(type='hidden' id='join-img' name='joinImg')
                 input(type='text' name='nick' placeholder='닉네임' maxlength=10 required)
                 input(type='email' name='email' placeholder='이메일' maxlength=20 required)
@@ -29,7 +29,7 @@ block content
             }
         });
 
-        document.querySelector('#img').addEventListener('change', function() {
+        document.querySelector('#jimg').addEventListener('change', function() {
             const fr = new FileReader();
             const fd = new FormData();
 

@@ -2,7 +2,7 @@ const express = require('express'),
       bcrypt = require('bcrypt'),
       router = express.Router();
 
-const { isLoggedIn } = require('./middlewares');
+const { isLoggedIn, upload } = require('./middlewares');
 const db = require('../models');
 
 /* GET users listing. */
@@ -25,6 +25,11 @@ router.post('/edit', isLoggedIn, async (req, res, next) => {
     console.error(err);
     next(err);
   }
+});
+
+router.post('/edit/img', isLoggedIn, upload.single('pimg'), (req, res) => {
+  console.log(req.file);
+  res.json({ uploadFileP: `/uploads/${req.file.filename}` });
 });
 
 router.post('/:id/follow', isLoggedIn, async (req, res, next) => {

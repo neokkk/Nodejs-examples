@@ -5,9 +5,10 @@ block content
         .main-header
             h2= '프로필 수정'
         .main-profile
-            img(src= user.imgUrl)
+            img(id='profile-preview' src= user.imgUrl)
             form.main-profile-form(action='/user/edit' method="POST")
-                input(type='file' id='img' name='img')
+                input(type='file' id='pimg' name='pimg')
+                imput(type='hidden' id='profile-img' name='profileImg')
                 input(type='text' name='nick' placeholder='닉네임' maxlength=10 required value= user.nickname)
                 input(type='email' name='email' maxlength=20 readOnly value= user.email)
                 input(type='password' id='pwd' name='pwd' placeholder='비밀번호 수정')
@@ -26,7 +27,33 @@ block content
             }
         });
 
-        document.querySelector('#img').addEventListener('change', e => {
+        document.querySelector('#pimg').addEventListener('change', function() {
+            const fr = new FileReader();
+            const fd = new FormData();
 
+            fr.readAsDataURL(this.files[0]);
+            fd.append('img', this.files[0]);
+
+            fr.onload = () => {
+                document.querySelector('#profile-preview').src = fr.result;
+            }
+
+            axios({
+                method: 'POST',
+                url: '/user/edit/img',
+                data: fd,
+                config: { headers: { 'Content-Type': 'multipart/form-data' }}
+            })
+                .then(result => {
+                    console.log('result');
+                    console.log(result);
+                    const { uploadFileP } = result.data;
+
+                    document.querySelector('#profile-img').value = uploadFileP;
+                })
+                .catch(err => {
+                    console.error(err);
+                    console.log(err.message);
+                });
         });
         
