@@ -5,10 +5,10 @@ block content
         .main-header
             h2= '프로필 수정'
         .main-profile
-            img(id='profile-preview' src= user.imgUrl)
+            img(id='profile-preview' src= user && user.imgUrl)
             form.main-profile-form(action='/user/edit' method="POST")
                 input(type='file' id='pimg' name='pimg')
-                imput(type='hidden' id='profile-img' name='profileImg')
+                input(type='hidden' id='profile-img' name='profileImg')
                 input(type='text' name='nick' placeholder='닉네임' maxlength=10 required value= user.nickname)
                 input(type='email' name='email' maxlength=20 readOnly value= user.email)
                 input(type='password' id='pwd' name='pwd' placeholder='비밀번호 수정')
@@ -31,7 +31,7 @@ block content
             const fr = new FileReader();
             const fd = new FormData();
 
-            fr.readAsDataURL(this.files[0]);
+            fr.readAsDataURL(this.files[0]); 
             fd.append('img', this.files[0]);
 
             fr.onload = () => {
@@ -44,16 +44,11 @@ block content
                 data: fd,
                 config: { headers: { 'Content-Type': 'multipart/form-data' }}
             })
-                .then(result => {
-                    console.log('result');
-                    console.log(result);
-                    const { uploadFileP } = result.data;
+            .then(result => {
+                const { uploadFile } = result.data;
 
-                    document.querySelector('#profile-img').value = uploadFileP;
-                })
-                .catch(err => {
-                    console.error(err);
-                    console.log(err.message);
-                });
+                document.querySelector('#profile-img').value = uploadFile;
+            })
+            .catch(err => console.error(err));
         });
         

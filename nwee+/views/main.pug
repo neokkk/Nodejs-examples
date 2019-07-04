@@ -33,7 +33,6 @@ block content
                                 span= twit.postCreatedAt.toDateString()
 
     script.
-
         // delete post btn
         document.querySelectorAll('.main-post-delete').forEach(value => {
             value.addEventListener('click', () => {
@@ -48,15 +47,10 @@ block content
                         if (confirm('게시물을 지우시겠습니까?')) {
                             axios
                                 .delete(`/post/${twitId}`)
+                                .then(() => window.location = '/')
                                 .catch(err => {
                                      console.error(err);
-                                     if (err.response) {
-                                         console.log(err.response);
-                                     } else if (err.request) {
-                                         console.log(err.request);
-                                     } else {
-                                         console.log(err.message);
-                                     }
+                                     next(err);
                                 });
                         }
                     }
@@ -75,7 +69,13 @@ block content
 
                     if (twitUserId !== myId) {
                         if (confirm('팔로우 하시겠습니까?')) {
-                            axios.post(`/user/${twitUserId}/follow`);
+                            axios
+                                .post(`/user/${twitUserId}/follow`)
+                                .then(() => window.location = '/')
+                                .catch(err => {
+                                    console.error(err);
+                                    next(err);
+                                });
                         }
                     }
                 }
@@ -93,7 +93,13 @@ block content
 
                     if (twitUserId !== myId) {
                         if (confirm('언팔로우 하시겠습니까?')) {
-                            axios.delete(`/user/${twitUserId}/follow`);
+                            axios
+                                .delete(`/user/${twitUserId}/follow`)
+                                .then(() => window.location = '/')
+                                .catch(err => {
+                                    console.error(err);
+                                    next(err);
+                                });
                         }
                     }
                 }

@@ -15,11 +15,11 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
     try {
         const hash = await bcrypt.hash(pwd, 12);
 
-        await db.query(`SELECT * FROM user WHERE email='${email}'`, (err, result) => {
+        await db.query('SELECT * FROM user WHERE email=?', [email], (err, result) => {
             if (err) console.error(err);
             if (result.length === 0) {
                 db.query(`INSERT INTO user (nickname, email, password, imgUrl, comment, joinDate) VALUES (?, ?, ?, ?, ?, Now())`,
-                    [ `${nick}`, `${email}`, `${hash}`, `${joinImg}`, `${comment}`], err2 => {
+                    [ nick, email, hash, joinImg, comment], err2 => {
                         if (err2) console.error(err2);
                         res.redirect('/');
                 });
@@ -35,8 +35,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
     }
 });
 
-router.post('/join/img', upload.single('jimg'), (req, res) => {
-    console.log(req.file);
+router.post('/join/img', upload.single('img'), (req, res) => {
     res.json({ uploadFile: `/uploads/${req.file.filename}`});
 });
 

@@ -11,35 +11,35 @@ router.get('/', isLoggedIn, (req, res) => {
 });
 
 router.post('/edit', isLoggedIn, async (req, res, next) => {
-  const { nick, pwd, comment } = req.body;
-
   try {
-    const hash = await bcrypt.hash(pwd, 12);
+    const { nick, pwd, comment, profileImg } = req.body;
 
-    await db.query(`UPDATE user SET nickname='${nick}', password='${hash}', comment='${comment}', updateDate=Now() WHERE email='${req.user.email}'`, (err, result) => {
-      if (err) console.error(err);
-
+    if (pwd === '') {
+      await db.query('UPDATE user SET nickname=?, imgUrl=?, comment=?, updateDate=Now() WHERE email=?',
+          [nick, profileImg, comment, req.user.email]);
       res.redirect('/');
-    });
+    } else {
+      const hash = await bcrypt.hash(pwd, 12);
+  
+      await db.query('UPDATE user SET nickname=?, password=?, imgUrl=?, comment=?, updateDate=Now() WHERE email=?',
+          [nick, hash, profileImg, comment, req.user.email]);
+      res.redirect('/');
+    }
   } catch (err) {
     console.error(err);
     next(err);
   }
 });
 
-router.post('/edit/img', isLoggedIn, upload.single('pimg'), (req, res) => {
+router.post('/edit/img', isLoggedIn, upload.single('img'), (req, res) => {
   console.log(req.file);
-  res.json({ uploadFileP: `/uploads/${req.file.filename}` });
+  res.json({ uploadFile: `/uploads/${req.file.filename}` });
 });
 
 router.post('/:id/follow', isLoggedIn, async (req, res, next) => {
   try {
     db.query('INSERT INTO follow (followerId, followingId) VALUES (?, ?)', 
-      [req.user.id, parseInt(req.params.id)], err => {
-        if (err) throw err;
-
-        res.redirect(303, '/');
-      });
+      [req.user.id, parseInt(req.params.id)]);
   } catch (err) {
     console.error(err);
     next(err);
@@ -48,10 +48,8 @@ router.post('/:id/follow', isLoggedIn, async (req, res, next) => {
 
 router.delete('/:id/follow', isLoggedIn, async (req, res, next) => {
   try {
-    db.query(`DELETE FROM follow WHERE followerId=${req.user.id} AND followingId=${parseInt(req.params.id)}`, (err, result) => {
-      console.error(err);
-      res.redirect(303, '/');
-    });
+    db.query('DELETE FROM follow WHERE followerId=? AND followingId=?',
+        [req.user.id, parseInt(req.params.id)]);
   } catch (err) {
     console.error(err);
     next(err);

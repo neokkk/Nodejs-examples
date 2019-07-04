@@ -6,9 +6,9 @@ block content
             h2= '회원가입'
         .main-join
             img(id='join-preview')
-            form.main-join-form(action='/auth/join' method="POST" enctype='multipart/form-data')
+            form.main-join-form(action='/auth/join' method="POST")
                 input(type='file' id='jimg' name='jimg')
-                imput(type='hidden' id='join-img' name='joinImg')
+                input(type='hidden' id='join-img' name='joinImg')
                 input(type='text' name='nick' placeholder='닉네임' maxlength=10 required)
                 input(type='email' name='email' placeholder='이메일' maxlength=20 required)
                 input(type='password' id='pwd' name='pwd' placeholder='비밀번호' required)
@@ -47,11 +47,12 @@ block content
                 config: { headers: { 'Content-Type': 'multipart/form-data' }}
             })
                 .then(result => {
-                    console.log('result');
-                    console.log(result);
                     const { uploadFile } = result.data;
 
                     document.querySelector('#join-img').value = uploadFile;
                 })
-                .catch(err => console.error(err));
+                .catch(err => {
+                    console.error(err);
+                    console.log(err.message);
+                });
         });
