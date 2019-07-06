@@ -33,6 +33,12 @@ block content
                                 span= twit.postCreatedAt.toDateString()
 
     script.
+        // infinite scrolling
+        window.addEventListener('scroll', e => {
+            console.log(document.height);
+            
+        });
+
         // delete post btn
         document.querySelectorAll('.main-post-delete').forEach(value => {
             value.addEventListener('click', () => {

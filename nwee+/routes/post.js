@@ -36,7 +36,7 @@ router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
         }
 
         await db.query(`INSERT INTO post (postContent, postImgUrl, postCreatedAt, userId) VALUES (?, ?, Now(), ?)`,
-                [twit, url ? url : null, req.user.id]);
+                [twit.replace(/(?:\r\n|\r|\n)/g, '<br/>'), url ? url : null, req.user.id]);
         res.redirect('/');
     } catch (err) {
         console.error(err);

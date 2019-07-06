@@ -37,7 +37,7 @@ html
                 span= ' 팔로워'
             form.nav-form(action='/post' method='POST' enctype='multipart/form-data')
               input(type='hidden' id='url' name='url')
-              textarea(id='twit' name='twit' style='resize:none' placeholder='새 트윗 작성' max-length=200 required)
+              textarea(id='twit' name='twit' style='resize:none; white-style:pre' placeholder='새 트윗 작성' max-length=200 required)
               .nav-form-preview
                 span= '미리보기'
                 img(url='' alt='미리보기')
