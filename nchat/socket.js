@@ -1,31 +1,29 @@
-const WebSocket = require('ws');
+const SocketIO = require('socket.io');
 
 module.exports = server => {
-    const wss = new WebSocket.Server({ server }); // http와 wss 포트 공유
+    const io = SocketIO(server, { path: '/socket.io' });
 
-    wss.on('connection', (ws, req) => { // event 기반
-        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress; // proxy 전 ip, 최종 ip
+    io.on('connection', socket => {
+        const req = socket.request;
+        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        
+        console.log('새로운 클라이언트 접속', ip, socket.id, req.ip);
 
-        console.log('클라이언트 접속', ip);
-        ws.on('message', message => {
-            console.log(message);
+        socket.on('reply', data => { // ws.message
+            console.log(data);
         });
 
-        ws.on('error', error => {
-            console.log(error);
+        socket.on('error', err => {
+            console.error(err);
         });
 
-        ws.on('close', () => {
-            console.log('클라이언트 접속 해제');
-            clearInterval(ws.interval);
+        socket.on('disconnect', () => { // ws.close
+            console.log('클라이언트 접속 해제.', ip, socket.id);
+            clearInterval(socket.interval);
         });
 
-        const interval = setInterval(() => {
-            if (ws.readyState === ws.OPEN) {
-                ws.send('서버에서 클라이언트로 메시지를 보냅니다.');
-            }
+        socket.interval = setInterval(() => {
+            socket.emit('news', 'Hello Socket.IO!');
         }, 3000);
-
-        ws.interval = interval;
     });
 }

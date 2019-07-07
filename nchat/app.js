@@ -8,9 +8,11 @@ const express = require('express'),
 require('dotenv').config();
 
 const webSocket = require('./socket'),
-      indexRouter = require('./routes');
+      indexRouter = require('./routes')
+      connect = require('./schemas');
 
 const app = express();
+connect();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

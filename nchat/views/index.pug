@@ -3,14 +3,13 @@ extends layout
 block content
     div F12를 눌러 console 탭과 network 탭을 확인하세요.
 
+    script(src= '/socket.io/socket.io.js')
     script.
-        const webSocket = new WebSocket('ws://localhost:8005');
+        const socket = io.connect('http://localhost:8005', {
+            path: '/socket.io',
+        });
 
-        webSocket.onopen = () => { // socket.js의 on connection과 대응
-            console.log('서버와 웹 소켓 연결 성공!');
-        }
-
-        webSocket.onmessage = e => {
-            console.log(e.data);
-            webSocket.send('클라이언트에서 서버로 메시지를 보냅니다.');
-        }
+        socket.on('news', data => {
+            console.log(data);
+            socket.emit('reply', 'Hello Node.js!');
+        });
