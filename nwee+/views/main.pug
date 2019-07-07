@@ -35,8 +35,18 @@ block content
     script.
         // infinite scrolling
         window.addEventListener('scroll', e => {
-            console.log(document.height);
+            const page = !{page};
             
+            if (document.body.scrollHeight - window.innerHeight - window.scrollY <= 30) {
+                axios
+                    .get(`/scroll/${page + 10}`)
+                    .then(result => {
+                        console.log(result);
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    });
+            }
         });
 
         // delete post btn
