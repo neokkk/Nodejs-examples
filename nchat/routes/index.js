@@ -1,7 +1,7 @@
 const express = require('express'),
       multer = require('multer'),
       path = require('path'),
-      fs = require('filesystem');
+      fs = require('file-system');
 
 const Room = require('../schemas/room'),
       Chat = require('../schemas/chat');
@@ -72,6 +72,7 @@ router.get('/room/:id', async (req, res, next) => {
             room,
             title: room.title,
             chats,
+            number: rooms && rooms[req.params.id] && rooms[req.params.id].length + 1 || 0,
             user: req.session.color,
         });
     } catch (err) {

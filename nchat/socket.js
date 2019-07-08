@@ -35,7 +35,8 @@ module.exports = (server, app, sessionMiddleware) => {
         socket.join(roomId); // room in
         socket.to(roomId).emit('join', {
             user: 'system',
-            chat: `${req.session.color}님이 입장하였습니다.`
+            chat: `${req.session.color}님이 입장하였습니다.`,
+            number: socket.adapter.rooms[roomId].length,
         });
 
         socket.on('disconnect', () => {
