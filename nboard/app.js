@@ -10,6 +10,8 @@ const indexRouter = require('./routes/index'),
 
 const app = express();
 
+require('dotenv').config();
+
 // MongoDB setting
 const connect = require('./schemas/index');
 connect();
