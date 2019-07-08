@@ -30,7 +30,7 @@ module.exports = (server, app, sessionMiddleware) => {
         const { headers: { referer } } = req;
         const roomId = referer
             .split('/')[referer.split('/').length - 1]
-            .replace(/|?.+/, '');
+            .replace(/\?.+/, '');
 
         socket.join(roomId); // room in
         socket.to(roomId).emit('join', {
