@@ -1,7 +1,7 @@
-const express = require('express'),
-      multer = require('multer'),
+const express = require('../node_modules/express'),
+      multer = require('../node_modules/multer'),
       path = require('path'),
-      fs = require('file-system');
+      fs = require('../node_modules/file-system/file-system');
 
 const Room = require('../schemas/room'),
       Chat = require('../schemas/chat');

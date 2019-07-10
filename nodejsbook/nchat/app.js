@@ -1,12 +1,12 @@
-const express = require('express'),
+const express = require('./node_modules/express'),
       path = require('path'),
-      morgan = require('morgan'),
-      cookieParser = require('cookie-parser'),
-      session = require('express-session'),
+      morgan = require('./node_modules/morgan'),
+      cookieParser = require('./node_modules/cookie-parser'),
+      session = require('./node_modules/express-session'),
       flash = require('connect-flash'),
-      ColorHash = require('color-hash');
+      ColorHash = require('./node_modules/color-hash/lib/color-hash');
 
-require('dotenv').config();
+require('./node_modules/dotenv/lib/main').config();
 
 const webSocket = require('./socket'),
       indexRouter = require('./routes')

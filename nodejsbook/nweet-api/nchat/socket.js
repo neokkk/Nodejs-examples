@@ -1,5 +1,5 @@
-const SocketIO = require('socket.io'),
-      axios = require('axios');
+const SocketIO = require('./node_modules/socket.io/lib'),
+      axios = require('./node_modules/axios');
 
 module.exports = (server, app, sessionMiddleware) => {
     const io = SocketIO(server, { path: '/socket.io' });
