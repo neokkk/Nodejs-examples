@@ -38,7 +38,7 @@ router.post('/edit/img', isLoggedIn, upload.single('img'), (req, res) => {
 
 router.post('/:id/follow', isLoggedIn, async (req, res, next) => {
   try {
-    db.query('INSERT INTO follow (followerId, followingId) VALUES (?, ?)', 
+    await db.query('INSERT INTO follow (followerId, followingId) VALUES (?, ?)', 
       [req.user.id, parseInt(req.params.id)]);
   } catch (err) {
     console.error(err);
@@ -48,7 +48,7 @@ router.post('/:id/follow', isLoggedIn, async (req, res, next) => {
 
 router.delete('/:id/follow', isLoggedIn, async (req, res, next) => {
   try {
-    db.query('DELETE FROM follow WHERE followerId=? AND followingId=?',
+    await db.query('DELETE FROM follow WHERE followerId=? AND followingId=?',
         [req.user.id, parseInt(req.params.id)]);
   } catch (err) {
     console.error(err);

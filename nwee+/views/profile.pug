@@ -8,7 +8,7 @@ block content
             img(id='profile-preview' src= user && user.imgUrl)
             form.main-profile-form(action='/user/edit' method="POST")
                 input(type='file' id='pimg' name='pimg')
-                input(type='hidden' id='profile-img' name='profileImg')
+                input(type='hidden' id='profile-img' name='profileImg' value= user.imgUrl)
                 input(type='text' name='nick' placeholder='닉네임' maxlength=10 required value= user.nickname)
                 input(type='email' name='email' maxlength=20 readOnly value= user.email)
                 input(type='password' id='pwd' name='pwd' placeholder='비밀번호 수정')

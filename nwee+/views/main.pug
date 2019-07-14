@@ -17,9 +17,9 @@ block content
                         .main-post-profile
                             img.main-post-profile-image(src= twit.imgUrl)
                             .main-post-profile-name= twit.nickname
-                            if user.id !== twit.userId && !follow
+                            if user.id !== twit.userId && follow.indexOf(twit.userId) === -1
                                 button.main-post-follow= '팔로우'
-                            if user.id !== twit.userId && follow
+                            if user.id !== twit.userId && follow.indexOf(twit.userId) !== -1
                                 button.main-post-unfollow= '언팔로우'
                         .main-post-wrap
                             .main-post-comment= twit.postContent
@@ -41,15 +41,13 @@ block content
         //-         axios
         //-             .get(`/scroll/${page + 10}`)
         //-             .then(result => {
-        //-                 console.log(result);
+                        
         //-             })
         //-             .catch(err => {
         //-                 console.error(err);
         //-             });
         //-     }
         //- });
-
-        console.log(app.get('db'));
 
         // delete post btn
         document.querySelectorAll('.main-post-delete').forEach(value => {
