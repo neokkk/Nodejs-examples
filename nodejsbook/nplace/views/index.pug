@@ -1,0 +1,35 @@
+extends layout
+
+block content
+    h1 즐겨찾기
+    #map
+    script.
+        const positions = [];
+    for result in results
+        script.
+            positions.push({
+                lat: #{result.location[1]},
+                lng: #{result.location[0]},
+                name: '#{result.name}',
+                id: '#{result.placeId}'
+            });
+    script.
+        function initMap() {
+            let center = positions[0] || { lat: 37.540705, lng: 126.956764 };
+            let map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: center
+            });
+
+            positions.forEach(pos => {
+                new google.maps.Marker({
+                    position: { lat: pos.lat, lng: pos.lng },
+                    map: map,
+                    title: pos.name
+                });
+            });
+        }
+    script(
+        async
+        defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXFV0meWJx4dlmxHJ-aujUtks3sTLwsw&callback=initMap")
