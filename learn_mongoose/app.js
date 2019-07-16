@@ -1,12 +1,15 @@
-const createError = require("http-errors");
-const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
+const createError = require("http-errors"),
+      express = require("express"),
+      path = require("path");
+      cookieParser = require("cookie-parser"),
+      logger = require("morgan");
 
-const indexRouter = require("./routes"); // index는 생략 가능
-const userRouter = require("./routes/users");
-const commentRouter = require("./routes/comments");
+require('dotenv').config();
+
+const indexRouter = require("./routes"), // index는 생략 가능
+      userRouter = require("./routes/users"),
+      commentRouter = require("./routes/comments");
+
 const connect = require("./schemas");
 
 const app = express();
