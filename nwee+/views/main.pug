@@ -8,7 +8,7 @@ block content
                 form.main-header-form(action='/post/hashtag')
                     span
                         i.fa.fa-search
-                    input(type='search' placeholder='해시태그 검색')
+                    input(type='search' name='hashtag' placeholder='해시태그 검색')
             if twits
                 for twit in twits
                     .main-post
@@ -33,23 +33,20 @@ block content
                                 span= twit.postCreatedAt.toDateString()
 
     script.
-        // infinite scrolling
+        // 무한 스크롤링
         //- window.addEventListener('scroll', e => {
-        //-     const page = !{page};
+        //-     const page = 10;
             
         //-     if (document.body.scrollHeight - window.innerHeight - window.scrollY <= 30) {
         //-         axios
-        //-             .get(`/scroll/${page + 10}`)
-        //-             .then(result => {
-                        
-        //-             })
+        //-             .get(`/scroll/${page}`)
         //-             .catch(err => {
         //-                 console.error(err);
         //-             });
         //-     }
         //- });
 
-        // delete post btn
+        // post 제거 이벤트
         document.querySelectorAll('.main-post-delete').forEach(value => {
             value.addEventListener('click', () => {
                 const isLoggedIn = document.querySelector('#my-id');
@@ -74,7 +71,7 @@ block content
             });
         });
 
-        // follow btn
+        // 팔로우 요청 이벤트
         document.querySelectorAll('.main-post-follow').forEach(value => {
             value.addEventListener('click', () => {
                 const isLoggedIn = document.querySelector('#my-id');
@@ -98,7 +95,7 @@ block content
             });
         });
 
-        // unfollow btn
+        // 언팔로우 요청 이벤트
         document.querySelectorAll('.main-post-unfollow').forEach(value => {
             value.addEventListener('click', () => {
                 const isLoggedIn = document.querySelector('#my-id');

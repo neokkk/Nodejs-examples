@@ -1,4 +1,9 @@
-html { margin: 0; padding: 0 }
+html { 
+  margin: 0; 
+  padding: 0; 
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'NanumBarunGothic', sans-serif;
   font-weight: 200;
@@ -6,7 +11,9 @@ body {
   background-color: #eeeeee;
   margin: 0;
   padding: 0;
+  transition: 0.4s;
 }
+
 a { 
   color: inherit;
   text-decoration: none;
@@ -292,4 +299,25 @@ a:visited {
 .nav-trend ul li {
   color: #ee5959;
   margin: 5px 0;
+}
+
+/* aside */
+.aside {
+  width: 30px;
+  height: 30px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 50%;
+}
+
+.aside i {
+  color: #ee5959;
+  font-size: 20px;
+  padding: 5px;
 }

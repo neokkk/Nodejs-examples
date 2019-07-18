@@ -29,18 +29,21 @@ html
                   span= user.nickname
                   span= user.comment
             ul
-              li= 0
+              li
+                a(href='/user/mytwits')= myTwits
                 span= ' 트윗'
-              li= follow.length
-                span= ' 팔로우'
-              li= 0
+              li
+                a(href='/user/myfollowings')= follow.length
+                span= ' 팔로잉'
+              li
+                a(href='/user/myfollowers')= followers
                 span= ' 팔로워'
             form.nav-form(action='/post' method='POST' enctype='multipart/form-data')
               input(type='hidden' id='url' name='url')
               textarea(id='twit' name='twit' style='resize:none; white-style:pre' placeholder='새 트윗 작성' max-length=200 required)
               .nav-form-preview
                 span= '미리보기'
-                img(url='' alt='미리보기')
+                img(alt='미리보기')
               .nav-form-upload
                 i.fas.fa-folder
                 input(type='file' accept='image/*' id='upload')
@@ -48,6 +51,8 @@ html
           include trend
         else
           .nav-login
+            if loginError
+              h3= loginError
             h2= '로그인'
             .nav-login-form
               h3= '계정이 있으신가요?'
@@ -64,9 +69,12 @@ html
           include trend 
         
       block content
+      
+      .aside
+        i.fas.fa-arrow-up
 
   script.
-    // restricting words length
+    // 글자 수 제한
     if (document.querySelector('.nav-form textarea')) {
       document.querySelector('.nav-form textarea').addEventListener('change', function(e) {
         const textValue = e.target.value;
@@ -78,7 +86,16 @@ html
       });
     }
 
-    // image upload
+    // 최상단으로 이동
+    document.querySelector('.aside').addEventListener('click', () => {
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // 이미지 업로드
     if (document.querySelector('#upload')) {
       document.querySelector('#upload').addEventListener('change', function() {
         const fr = new FileReader();
