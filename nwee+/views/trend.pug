@@ -1,7 +1,0 @@
-block trend
-    .nav-trend
-        h3 실시간 트렌드
-        ul
-            for trend in trends 
-                a(href=`/post/hashtag/${trend.hashtagId}`)
-                    li= '#' + trend.hashtagName
